@@ -1,0 +1,164 @@
+#include "parser.h"
+
+#define EPS 1e-07
+
+#test incorrect_input
+    OBJData *a;
+    int flag = parseOBJFile("j.obj", &a);
+    ck_assert_int_eq(flag, EXIT_FAILURE);
+
+#test correct_input
+    OBJData *a;
+    int flag = parseOBJFile("objects/teddy.obj", &a);
+    ck_assert_int_eq(flag, EXIT_SUCCESS);   
+
+#test normal
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000, 0.0000000, 0.0000000,
+      0.0000000, 0.0000000, 2.0000000,
+      0.0000000, 2.0000000, 0.0000000,
+      0.0000000, 2.0000000, 2.0000000,
+      2.0000000, 0.0000000, 0.0000000,
+      2.0000000, 0.0000000, 2.0000000,
+      2.0000000, 2.0000000, 0.0000000,
+      2.0000000, 2.0000000, 2.0000000};
+
+  parseOBJFile("objects/cube.obj", &a);
+  
+  ck_assert_int_eq(a->faceCount, 10);
+  ck_assert_int_eq(a->vertexCount, 8);
+
+  int i = 0;
+  while (i < (int)a->vertexCount * 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+
+  freeOBJData(a);
+
+#test affine_rotate_X_1
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000, 0.0000000, 0.0000000,  0.0000000, 1.0000000, 1.7320508,
+      0.0000000, 1.7320508, -1.0000000, 0.0000000, 2.7320508, 0.7320508,
+      2.0000000, 0.0000000, 0.0000000,  2.0000000, 1.0000000, 1.7320508,
+      2.0000000, 1.7320508, -1.0000000, 2.0000000, 2.7320508, 0.7320508};
+  parseOBJFile("objects/cube.obj", &a);
+  return_x(a, 30);
+  
+  ck_assert_int_eq(a->vertexCount, 8);
+
+  int i = 0;
+  while (i < (int)a->vertexCount * 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+  freeOBJData(a);
+
+
+#test affine_rotate_X_2
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000, 0.0000000, 0.0000000, 0.0000000, -1.0000000, 1.7320508,
+      0.0000000, 1.7320508, 1.0000000, 0.0000000, 0.7320508,  2.7320508,
+      2.0000000, 0.0000000, 0.0000000, 2.0000000, -1.0000000, 1.7320508,
+      2.0000000, 1.7320508, 1.0000000, 2.0000000, 0.7320508,  2.7320508};
+  parseOBJFile("objects/cube.obj", &a);
+  return_x(a, -30);
+  
+  ck_assert_int_eq(a->vertexCount, 8);
+  int i = 0;
+  while (i < (int)a->vertexCount * 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+  freeOBJData(a);
+
+
+
+
+#test affine_rotate_Y_1
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000, 0.0000000, 0.0000000,  1.0000000, 0.0000000, 1.7320508,
+      0.0000000, 2.0000000, 0.0000000,  1.0000000, 2.0000000, 1.7320508,
+      1.7320508, 0.0000000, -1.0000000, 2.7320508, 0.0000000, 0.7320508,
+      1.7320508, 2.0000000, -1.0000000, 2.7320508, 2.0000000, 0.7320508};
+  parseOBJFile("objects/cube.obj", &a);
+  return_y(a, 30);
+ 
+  ck_assert_int_eq(a->vertexCount, 8);
+
+  int i = 0;
+  while (i < (int)a->vertexCount * 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+  freeOBJData(a);
+
+#test affine_rotate_Y_2
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000, 0.0000000, 0.0000000, -1.0000000, 0.0000000, 1.7320508,
+      0.0000000, 2.0000000, 0.0000000, -1.0000000, 2.0000000, 1.7320508,
+      1.7320508, 0.0000000, 1.0000000, 0.7320508,  0.0000000, 2.7320508,
+      1.7320508, 2.0000000, 1.0000000, 0.7320508,  2.0000000, 2.7320508};
+  parseOBJFile("objects/cube.obj", &a);
+  return_y(a, -30);
+ 
+  ck_assert_int_eq(a->vertexCount, 8);
+
+  int i = 0;
+  while (i < (int)a->vertexCount * 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+  freeOBJData(a);
+
+
+#test affine_rotate_Z_1
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000, 0.0000000,  0.0000000, 0.0000000, 0.0000000,  2.0000000,
+      1.0000000, 1.7320508,  0.0000000, 1.0000000, 1.7320508,  2.0000000,
+      1.7320508, -1.0000000, 0.0000000, 1.7320508, -1.0000000, 2.0000000,
+      2.7320508, 0.7320508,  0.0000000, 2.7320508, 0.7320508,  2.0000000};
+  parseOBJFile("objects/cube.obj", &a);
+  return_z(a, 30);
+  
+  ck_assert_int_eq(a->vertexCount, 8);
+
+  int i = 0;
+  while (i < (int)a->vertexCount * 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+  freeOBJData(a);
+
+#test affine_rotate_Z_2
+  OBJData *a;
+  
+  float vertices_arr[] = {
+      0.0000000,  0.0000000, 0.0000000, 0.0000000,  0.0000000, 2.0000000,
+      -1.0000000, 1.7320508, 0.0000000, -1.0000000, 1.7320508, 2.0000000,
+      1.7320508,  1.0000000, 0.0000000, 1.7320508,  1.0000000, 2.0000000,
+      0.7320508,  2.7320508, 0.0000000, 0.7320508,  2.7320508, 2.0000000};
+  parseOBJFile("objects/cube.obj", &a);
+  return_z(a, -30);
+  
+  ck_assert_int_eq(a->vertexCount, 8);
+
+  int i = 0;
+  while (i < (int)a->vertexCount* 3) {
+    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
+    i++;
+  }
+  freeOBJData(a);
+
