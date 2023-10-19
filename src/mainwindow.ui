@@ -86,12 +86,15 @@
      <rect>
       <x>880</x>
       <y>170</y>
-      <width>101</width>
+      <width>110</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Расположение</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -99,7 +102,7 @@
      <rect>
       <x>890</x>
       <y>320</y>
-      <width>71</width>
+      <width>77</width>
       <height>16</height>
      </rect>
     </property>
@@ -112,7 +115,7 @@
      <rect>
       <x>900</x>
       <y>460</y>
-      <width>58</width>
+      <width>67</width>
       <height>16</height>
      </rect>
     </property>
@@ -273,7 +276,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -393,7 +396,7 @@
        <rect>
         <x>110</x>
         <y>30</y>
-        <width>99</width>
+        <width>106</width>
         <height>20</height>
        </rect>
       </property>
@@ -404,9 +407,9 @@
      <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>10</x>
         <y>10</y>
-        <width>71</width>
+        <width>75</width>
         <height>16</height>
        </rect>
       </property>
@@ -417,10 +420,10 @@
      <widget class="QScrollBar" name="thickness">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>70</y>
+        <x>100</x>
+        <y>80</y>
         <width>160</width>
-        <height>16</height>
+        <height>21</height>
        </rect>
       </property>
       <property name="orientation">
@@ -430,8 +433,8 @@
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
+        <x>10</x>
+        <y>80</y>
         <width>71</width>
         <height>16</height>
        </rect>
@@ -443,7 +446,7 @@
      <widget class="QPushButton" name="check_color_face">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>230</x>
         <y>10</y>
         <width>51</width>
         <height>51</height>
@@ -544,7 +547,7 @@
      <rect>
       <x>930</x>
       <y>120</y>
-      <width>140</width>
+      <width>130</width>
       <height>32</height>
      </rect>
     </property>

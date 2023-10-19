@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -47,8 +48,9 @@ public:
     QLabel *label_13;
     QLabel *label_14;
     QFrame *frame;
-    QPushButton *close;
+    QGridLayout *gridLayout;
     QPushButton *fold;
+    QPushButton *close;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *scale_min;
@@ -111,13 +113,14 @@ public:
         label_2->setGeometry(QRect(780, 120, 111, 20));
         label_3 = new QLabel(centralwidget);
         label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(880, 170, 101, 16));
+        label_3->setGeometry(QRect(880, 170, 110, 16));
+        label_3->setAlignment(Qt::AlignCenter);
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName("label_4");
-        label_4->setGeometry(QRect(890, 320, 71, 16));
+        label_4->setGeometry(QRect(890, 320, 77, 16));
         label_5 = new QLabel(centralwidget);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(900, 460, 58, 16));
+        label_5->setGeometry(QRect(900, 460, 67, 16));
         label_9 = new QLabel(centralwidget);
         label_9->setObjectName("label_9");
         label_9->setGeometry(QRect(760, 350, 21, 16));
@@ -138,15 +141,21 @@ public:
         label_14->setGeometry(QRect(760, 240, 21, 16));
         frame = new QFrame(centralwidget);
         frame->setObjectName("frame");
-        frame->setGeometry(QRect(1010, 10, 101, 41));
+        frame->setGeometry(QRect(1060, 0, 70, 45));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        close = new QPushButton(frame);
-        close->setObjectName("close");
-        close->setGeometry(QRect(60, 10, 31, 32));
+        gridLayout = new QGridLayout(frame);
+        gridLayout->setObjectName("gridLayout");
         fold = new QPushButton(frame);
         fold->setObjectName("fold");
-        fold->setGeometry(QRect(10, 10, 31, 32));
+
+        gridLayout->addWidget(fold, 0, 0, 1, 1);
+
+        close = new QPushButton(frame);
+        close->setObjectName("close");
+
+        gridLayout->addWidget(close, 0, 1, 1, 1);
+
         layoutWidget = new QWidget(centralwidget);
         layoutWidget->setObjectName("layoutWidget");
         layoutWidget->setGeometry(QRect(780, 490, 301, 41));
@@ -176,7 +185,7 @@ public:
         tab->setObjectName("tab");
         label_7 = new QLabel(tab);
         label_7->setObjectName("label_7");
-        label_7->setGeometry(QRect(10, 10, 81, 16));
+        label_7->setGeometry(QRect(10, 10, 90, 16));
         v_square = new QRadioButton(tab);
         v_square->setObjectName("v_square");
         v_square->setGeometry(QRect(110, 30, 99, 20));
@@ -204,20 +213,20 @@ public:
         f_solid->setGeometry(QRect(110, 10, 99, 20));
         f_dashed = new QRadioButton(tab_2);
         f_dashed->setObjectName("f_dashed");
-        f_dashed->setGeometry(QRect(110, 30, 99, 20));
+        f_dashed->setGeometry(QRect(110, 30, 106, 20));
         label_8 = new QLabel(tab_2);
         label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(20, 10, 71, 16));
+        label_8->setGeometry(QRect(10, 10, 75, 16));
         thickness = new QScrollBar(tab_2);
         thickness->setObjectName("thickness");
-        thickness->setGeometry(QRect(120, 70, 160, 16));
+        thickness->setGeometry(QRect(100, 80, 160, 21));
         thickness->setOrientation(Qt::Horizontal);
         label_15 = new QLabel(tab_2);
         label_15->setObjectName("label_15");
-        label_15->setGeometry(QRect(20, 70, 71, 16));
+        label_15->setGeometry(QRect(10, 80, 71, 16));
         check_color_face = new QPushButton(tab_2);
         check_color_face->setObjectName("check_color_face");
-        check_color_face->setGeometry(QRect(240, 10, 51, 51));
+        check_color_face->setGeometry(QRect(230, 10, 51, 51));
         tabWidget->addTab(tab_2, QString());
         widget = new QWidget();
         widget->setObjectName("widget");
@@ -277,11 +286,11 @@ public:
         projection->addItem(QString());
         projection->addItem(QString());
         projection->setObjectName("projection");
-        projection->setGeometry(QRect(930, 120, 103, 32));
+        projection->setGeometry(QRect(930, 120, 130, 32));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 1130, 24));
+        menubar->setGeometry(QRect(0, 0, 1130, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -289,7 +298,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -310,8 +319,8 @@ public:
         label_12->setText(QCoreApplication::translate("MainWindow", "X", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "Z", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "Y", nullptr));
-        close->setText(QCoreApplication::translate("MainWindow", "\320\245", nullptr));
         fold->setText(QCoreApplication::translate("MainWindow", "_", nullptr));
+        close->setText(QCoreApplication::translate("MainWindow", "\320\245", nullptr));
         scale_min->setText(QCoreApplication::translate("MainWindow", "-", nullptr));
         scale_max->setText(QCoreApplication::translate("MainWindow", "+", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "\320\242\320\270\320\277 \320\262\320\265\321\200\321\210\320\270\320\275", nullptr));
