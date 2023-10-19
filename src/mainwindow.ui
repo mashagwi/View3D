@@ -201,10 +201,10 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>1010</x>
-      <y>10</y>
-      <width>101</width>
-      <height>41</height>
+      <x>1060</x>
+      <y>0</y>
+      <width>70</width>
+      <height>45</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -213,32 +213,22 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="close">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>10</y>
-       <width>31</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Х</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="fold">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>31</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>_</string>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="fold">
+       <property name="text">
+        <string>_</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="close">
+       <property name="text">
+        <string>Х</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -294,7 +284,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>81</width>
+        <width>90</width>
         <height>16</height>
        </rect>
       </property>
@@ -554,7 +544,7 @@
      <rect>
       <x>930</x>
       <y>120</y>
-      <width>103</width>
+      <width>140</width>
       <height>32</height>
      </rect>
     </property>
@@ -576,7 +566,7 @@
      <x>0</x>
      <y>0</y>
      <width>1130</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
