@@ -39,8 +39,14 @@ void View::paintGL() {
                     index2 = probe->faces[i].number_vertex[j + 1] - 1;
                 glBegin(GL_LINES);
                 glColor3f(f_red, f_green, f_blue);
-                glVertex3f(probe->vertices[index1 * 3], probe->vertices[index1 * 3 + 1], probe->vertices[index1 * 3 + 2]);
-                glVertex3f(probe->vertices[index2 * 3], probe->vertices[index2 * 3 + 1], probe->vertices[index2 * 3 + 2]);
+                coordinate source = {probe->vertices[index1 * 3], probe->vertices[index1 * 3 + 1], probe->vertices[index1 * 3 + 2]};
+                coordinate destination = transform(source);
+                glVertex3f(destination.x, destination.y, destination.z);
+                source.x = probe->vertices[index2 * 3];
+                source.y = probe->vertices[index2 * 3 + 1];
+                source.z = probe->vertices[index2 * 3 + 2];
+                destination = transform(source);
+                glVertex3f(destination.x, destination.y, destination.z);
                 glEnd();
             }
         }
@@ -69,5 +75,34 @@ float View::normaliza_0_1(float val, float min, float max) const {
 }
 
 void View::my_paint() {
+    float element = COEFF_PART / probe->maxVertexValue;
+    matrix_transformation[0][0] = element;
+    matrix_transformation[0][1] = 0;
+    matrix_transformation[0][2] = 0;
+    matrix_transformation[1][0] = 0;
+    matrix_transformation[1][1] = element;
+    matrix_transformation[1][2] = 0;
+    matrix_transformation[2][0] = 0;
+    matrix_transformation[2][1] = 0;
+    matrix_transformation[2][2] = element;
     paintGL();
+}
+
+coordinate View::transform(coordinate input) {
+    coordinate result = {0, 0, 0};
+    result.x = (matrix_transformation[0][0] * input.x + matrix_transformation[0][1] * input.y + matrix_transformation[0][2] * input.z);
+    result.y = (matrix_transformation[1][0] * input.x + matrix_transformation[1][1] * input.y + matrix_transformation[1][2] * input.z);
+    result.z = (matrix_transformation[2][0] * input.x + matrix_transformation[2][1] * input.y + matrix_transformation[2][2] * input.z);
+    return result;
+}
+
+void View::divide(Matrix A, Matrix B, Matrix *C) {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            *C[i][j] = 0;
+            for (int k = 0; k < 3; k++) {
+                *C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
 }

@@ -13,6 +13,15 @@ extern "C" {
 
 #define RGB_MIN 1
 #define RGB_MAX 255
+#define COEFF_PART 0.8
+
+typedef struct coordinate_t {
+    float x;
+    float y;
+    float z;
+} coordinate;
+
+typedef float Matrix[3][3];
 
 class View: public QOpenGLWidget, public QOpenGLFunctions
 {
@@ -28,6 +37,7 @@ public:
     double v_red = 1, v_green = 1, v_blue = 1;
     double f_red = 1, f_green = 1, f_blue = 1;
     double b_red = 0, b_green = 0, b_blue = 0;
+    Matrix matrix_transformation = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
     void my_paint();
 
@@ -38,6 +48,9 @@ protected:
 private:
     void qColorToRGB(const QColor &C, float &r, float &g, float &b) const;
     float normaliza_0_1(float val, float min, float max) const;
+
+    coordinate transform(coordinate);
+    void divide(Matrix, Matrix, Matrix*);
 };
 
 #endif // VIEW_H

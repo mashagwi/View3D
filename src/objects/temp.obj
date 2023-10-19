@@ -1,0 +1,10 @@
+# Blender v2.76 (sub 0) OBJ File: ''
+# www.blender.org
+mtllib cube.mtl
+o Cube
+v -1 1 0
+v 1 1 0
+v 1 -1 0
+v -1 -1 0
+
+f 1 2 3 4
