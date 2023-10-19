@@ -24,41 +24,27 @@ void View::initializeGL() {
 }
 
 void View::paintGL() {
-  //    float r, g, b;
-  glClearColor(b_red, b_green, b_blue, 1);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //    float r, g, b;
+    glClearColor(b_red, b_green, b_blue, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  glBegin(GL_LINES);
-  //    qColorToRGB(Qt::black, r, g, b);
-  glColor3f(f_red, f_green, f_blue);
-  if(probe != NULL) {
-      int n = 0;
-      for (int i = 0; i < probe->faceCount; i++) {
-        for (int j = 0; j < probe->faces[i].count_number_vertex; j++) {
-          for (int k = 0; k < probe->faces[i].number_vertex[j]; k++) {
-            glVertex3f(probe->vertices[n++], probe->vertices[n++],
-                       probe->vertices[n++]);
-            glVertex3f(probe->vertices[n++], probe->vertices[n++],
-                       probe->vertices[n++]);
-          }
+    if(probe != NULL) {
+        int index1, index2;
+        for (int i = 0; i < probe->faceCount; i++) {  // перебираем полигоны
+            for (int j = 0; j < probe->faces[i].count_number_vertex; j++) {  // перебираем линии в полигоне
+                index1 = probe->faces[i].number_vertex[j] - 1;
+                if (j == probe->faces[i].count_number_vertex - 1)
+                    index2 = probe->faces[i].number_vertex[0] - 1;
+                else
+                    index2 = probe->faces[i].number_vertex[j + 1] - 1;
+                glBegin(GL_LINES);
+                glColor3f(f_red, f_green, f_blue);
+                glVertex3f(probe->vertices[index1 * 3], probe->vertices[index1 * 3 + 1], probe->vertices[index1 * 3 + 2]);
+                glVertex3f(probe->vertices[index2 * 3], probe->vertices[index2 * 3 + 1], probe->vertices[index2 * 3 + 2]);
+                glEnd();
+            }
         }
-      }
-  }
-  glEnd();
-
-//  glBegin(GL_LINES);
-//  //    qColorToRGB(Qt::red, r, g, b);
-//  glColor3f(f_red, f_green, f_blue);
-//  glVertex3f(0.0f, 1.0f, 0.0f);
-//  glVertex3f(1.0f, 0.0f, 0.0f);
-//  glEnd();
-  //    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-  //    f->glClear(GL_COLOR_BUFFER_BIT);
-
-  //    QOpenGLFunctions_3_2_Core *f =
-  //    QOpenGLContext::currentContext()->versionFunctions<QOpenGLFunctions_3_2_Core>();
-
-  //    f->glDrawArraysInstanced(...);
+    }
 }
 
 void View::resizeGL(int w, int h) {
@@ -71,6 +57,7 @@ void View::resizeGL(int w, int h) {
   //        m_projection.setToIdentity();
   //        m_projection.perspective(45.0f, w / float(h), 0.01f, 100.0f);
 }
+
 void View::qColorToRGB(const QColor &C, float &r, float &g, float &b) const {
   r = normaliza_0_1(C.red(), RGB_MIN, RGB_MAX);
   g = normaliza_0_1(C.green(), RGB_MIN, RGB_MAX);

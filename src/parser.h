@@ -7,14 +7,14 @@
 #include <string.h>
 
 typedef struct face_t {
-  int* number_vertex;
-  int count_number_vertex;
+  int* number_vertex;  // массив индексов вершин
+  int count_number_vertex;  // количество вершин в полигоне
 } face;
 
 typedef struct {
   int vertexCount;  // Количество вершин
   float* vertices;  // Массив вершин (x, y, z)
-  face* faces;
+  face* faces;  // массив полигонов
   int faceCount;  // Количество граней
   float maxVertexValue;  // Максимальное значение среди всех вершин
   int maxFaceValue;  // Максимальное значение среди всех граней
