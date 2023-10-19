@@ -20,6 +20,13 @@ typedef struct {
   int maxFaceValue;  // максимальное значение среди всех граней
 } OBJData;
 
+typedef enum
+{
+  OK = 0,   // корректная матрица
+  INCORRECT_MATRIX = 1, // ошибка в матрице
+  ZERO_MATRIX = 3,      // нулевая матрица
+  } matrix_type_t;
+
 typedef struct matrix_struct
 {
   float **matrix;
@@ -28,12 +35,7 @@ typedef struct matrix_struct
   matrix_type_t matrix_type;
 } matrix_t;
 
-typedef enum
-{
-  OK = 0,   // корректная матрица
-  INCORRECT_MATRIX = 1, // ошибка в матрице
-  ZERO_MATRIX = 3,      // нулевая матрица
-  } matrix_type_t;
+
 
 void initializeOBJData(OBJData** objData);  // инициализация структуры
 
@@ -45,6 +47,10 @@ void freeOBJData(OBJData* objData);  // освобождение памяти
 matrix_t s21_create_matrix(int rows, int columns);
 
 void s21_remove_matrix(matrix_t* A);
+
+matrix_t s21_mult_matrix(matrix_t* A, matrix_t* B);
+
+int s21_correct_matrix(matrix_t A);
 
 matrix_t return_x(float a);  // вращение вокруг оси X
 
