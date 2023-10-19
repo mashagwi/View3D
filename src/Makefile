@@ -1,7 +1,7 @@
 PROJECT_NAME= s21_3dviewer
 FLAGS= -Wall -Wextra -Werror
 CHECKFL = $(shell pkg-config --cflags --libs check)
-SRC = $(PROJECT_NAME)_parser.c return.c
+SRC = $(PROJECT_NAME)_parser.c $(PROJECT_NAME)_matrix.c
 OS = $(shell uname)
 ifeq ($(OS), Linux)
 OPEN_CMD = xdg-open
@@ -20,9 +20,9 @@ uninstall:
 
 $(PROJECT_NAME).a: clean
 	gcc -c $(FLAGS) $(PROJECT_NAME)_parser.c -o $(PROJECT_NAME).o
-	gcc -c $(FLAGS) return.c -o return.o
+	gcc -c $(FLAGS) $(PROJECT_NAME)_matrix.c -o $(PROJECT_NAME)_matrix.o
 	
-	ar rc $(PROJECT_NAME).a $(PROJECT_NAME).o return.o 
+	ar rc $(PROJECT_NAME).a $(PROJECT_NAME).o $(PROJECT_NAME)_matrix.o
 	ranlib $(PROJECT_NAME).a
 
 

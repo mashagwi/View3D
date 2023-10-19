@@ -12,13 +12,28 @@ typedef struct face_t {
 } face;
 
 typedef struct {
-  int vertexCount;  // Количество вершин
-  float* vertices;  // Массив вершин (x, y, z)
+  int vertexCount;  // количество вершин
+  float* vertices;  // массив вершин (x, y, z)
   face* faces;  // массив полигонов
-  int faceCount;  // Количество граней
-  float maxVertexValue;  // Максимальное значение среди всех вершин
-  int maxFaceValue;  // Максимальное значение среди всех граней
+  int faceCount;  // количество граней
+  float maxVertexValue;  // максимальное значение среди всех вершин
+  int maxFaceValue;  // максимальное значение среди всех граней
 } OBJData;
+
+typedef struct matrix_struct
+{
+  float **matrix;
+  int rows;
+  int columns;
+  matrix_type_t matrix_type;
+} matrix_t;
+
+typedef enum
+{
+  OK = 0,   // корректная матрица
+  INCORRECT_MATRIX = 1, // ошибка в матрице
+  ZERO_MATRIX = 3,      // нулевая матрица
+  } matrix_type_t;
 
 void initializeOBJData(OBJData** objData);  // инициализация структуры
 
@@ -26,10 +41,24 @@ int parseOBJFile(const char* filename, OBJData** objData);  // парсинг ф
 
 void freeOBJData(OBJData* objData);  // освобождение памяти
 
-void return_x(OBJData* objData, double x);  // поворот по оси X
+//Работа с матрицами
+matrix_t s21_create_matrix(int rows, int columns);
 
-void return_y(OBJData* objData, double y);  // поворот по оси Y
+void s21_remove_matrix(matrix_t* A);
 
-void return_z(OBJData* objData, double z);  // поворот по оси Z
+matrix_t return_x(float a);  // вращение вокруг оси X
+
+matrix_t return_y(float a); // вращение вокруг оси Y
+
+matrix_t return_z(float a); // вращение вокруг оси Z
+
+matrix_t rotating(float ax, float ay, float az); // произвольное вращение
+
+matrix_t shifting(float a, float b, float c); // перемещение
+
+matrix_t scaling(float a, float b, float c); // масштабирование
+
+matrix_t matrix_alteration(float ax, float ay, float az, float da, float db,
+                        float dc, float ka, float kb, float kc); // сочетание всех изменений
 
 #endif  // S21_3D_VIEWER_PARSER_H
