@@ -3,15 +3,15 @@
 View::View(QWidget *parent) : QOpenGLWidget{parent} {}
 
 void View::initializeGL() {
-  float r, g, b, a = normaliza_0_1(255.f, RGB_MIN, RGB_MAX);
   initializeOpenGLFunctions();
-  qColorToRGB(Qt::blue, r, g, b);
-  glClearColor(r, g, b, a);
+
+  glClearColor(b_red, b_green, b_blue, 1);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_LIGHT0);
   glEnable(GL_LIGHTING);
   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
   glEnable(GL_COLOR_MATERIAL);
+
 
   //    QOpenGLWidget *widget = new QOpenGLWidget(parent);
   //    QSurfaceFormat format;
@@ -24,9 +24,19 @@ void View::initializeGL() {
 }
 
 void View::paintGL() {
-    //    float r, g, b;
     glClearColor(b_red, b_green, b_blue, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    if (this->vert_type == 1) {
+        paint_vertices();
+    }
+    if (this->face_type == 1) {
+        glEnable(GL_LINE_STIPPLE);
+        glLineStipple(1, 0x00FF);
+      }
+    glLineWidth(this->face_thickness);
+
+
 
     if(probe != NULL) {
         int index1, index2;
@@ -47,11 +57,15 @@ void View::paintGL() {
                 source.z = probe->vertices[index2 * 3 + 2];
                 destination = transform(source);
                 glVertex3f(destination.x, destination.y, destination.z);
+
+
+
                 glEnd();
             }
         }
     }
 }
+
 
 void View::resizeGL(int w, int h) {
   glViewport(0, 0, w, h);
@@ -64,15 +78,6 @@ void View::resizeGL(int w, int h) {
   //        m_projection.perspective(45.0f, w / float(h), 0.01f, 100.0f);
 }
 
-void View::qColorToRGB(const QColor &C, float &r, float &g, float &b) const {
-  r = normaliza_0_1(C.red(), RGB_MIN, RGB_MAX);
-  g = normaliza_0_1(C.green(), RGB_MIN, RGB_MAX);
-  b = normaliza_0_1(C.blue(), RGB_MIN, RGB_MAX);
-}
-
-float View::normaliza_0_1(float val, float min, float max) const {
-  return (val - min) / (max - min);
-}
 
 void View::my_paint() {
     float element = COEFF_PART / probe->maxVertexValue;
@@ -105,4 +110,16 @@ void View::divide(Matrix A, Matrix B, Matrix *C) {
             }
         }
     }
+}
+
+void View::paint_vertices() {
+  if (this->vert_type == 1) {
+    glEnable(GL_POINT_SMOOTH);
+  }
+  glPointSize(this->vertices_size);
+  glColor3f(this->v_red, this->v_green, this->v_blue);
+  glDrawArrays(GL_POINTS, 0, probe->vertexCount);
+  if (this->vert_type == 1) {
+    glDisable(GL_POINT_SMOOTH);
+  }
 }

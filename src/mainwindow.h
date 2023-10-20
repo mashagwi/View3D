@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
 
-    enum vert_type { CIRCLE, SQUARE, NO };
+    enum vert_type { NO, CIRCLE, SQUARE };
     enum face_type { SOLID, DASHED };
     enum project_type { PARALLEL, CENTRAL };
 

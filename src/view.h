@@ -29,11 +29,14 @@ class View: public QOpenGLWidget, public QOpenGLFunctions
 public:
     View(QWidget *parent = nullptr);
 
+    OBJData *probe = {};
+
     int project_type = 0;
     int vert_type = 0;
     int face_type = 0;
-    int face_thickness = 0;
-    OBJData *probe = {};
+    double face_thickness = 1;
+    double vertices_size = 1;
+
     double v_red = 1, v_green = 1, v_blue = 1;
     double f_red = 1, f_green = 1, f_blue = 1;
     double b_red = 0, b_green = 0, b_blue = 0;
@@ -46,11 +49,10 @@ protected:
     void resizeGL(int w, int h) override;
     void paintGL() override;
 private:
-    void qColorToRGB(const QColor &C, float &r, float &g, float &b) const;
-    float normaliza_0_1(float val, float min, float max) const;
-
     coordinate transform(coordinate);
     void divide(Matrix, Matrix, Matrix*);
+    void paint_vertices();
+
 };
 
 #endif // VIEW_H
