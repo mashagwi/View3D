@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    s21_3dviewer_matrix.c \
     s21_3dviewer_parser.c \
     view.cpp
 

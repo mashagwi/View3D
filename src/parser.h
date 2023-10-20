@@ -62,9 +62,9 @@ matrix_t rotating(float ax, float ay, float az); // произвольное в�
 
 matrix_t shifting(float a, float b, float c); // перемещение
 
-matrix_t scaling(float a, float b, float c); // масштабирование
+matrix_t scaling(float a); // масштабирование
 
 matrix_t matrix_alteration(float ax, float ay, float az, float da, float db,
-                        float dc, float ka, float kb, float kc); // сочетание всех изменений
+                        float dc, float ka); // сочетание всех изменений
 
 #endif  // S21_3D_VIEWER_PARSER_H

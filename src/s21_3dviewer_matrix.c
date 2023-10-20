@@ -119,21 +119,21 @@ matrix_t shifting(float a, float b, float c) {
   return result;
 }
 
-matrix_t scaling(float a, float b, float c) {
+matrix_t scaling(float a) {
   matrix_t result = s21_create_matrix(4, 4);
   result.matrix[0][0] = a;
-  result.matrix[1][1] = b;
-  result.matrix[2][2] = c;
+  result.matrix[1][1] = a;
+  result.matrix[2][2] = a;
   result.matrix[3][3] = 1.0;
   result.matrix_type = OK;
   return result;
 }
 
 matrix_t matrix_alteration(float ax, float ay, float az, float da, float db,
-                        float dc, float ka, float kb, float kc) {
+                        float dc, float ka) {
   matrix_t rotate = rotating(ax, ay, az);
   matrix_t shift = shifting(da, db, dc);
-  matrix_t scale = scaling(ka, kb, kc);
+  matrix_t scale = scaling(ka);
 
   matrix_t rs = s21_mult_matrix(&rotate, &shift);
   matrix_t result = s21_mult_matrix(&rs, &scale);

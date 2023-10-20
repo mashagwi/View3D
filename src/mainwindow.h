@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include "view.h"
 #include <QSettings>
+#define COEF_SHIFT 0.01
+#define COEF_ROTATE 0.0628319
 
 extern "C" {
      #include "parser.h"

@@ -81,15 +81,18 @@ void View::resizeGL(int w, int h) {
 
 void View::my_paint() {
     float element = COEFF_PART / probe->maxVertexValue;
-    matrix_transformation[0][0] = element;
-    matrix_transformation[0][1] = 0;
-    matrix_transformation[0][2] = 0;
-    matrix_transformation[1][0] = 0;
-    matrix_transformation[1][1] = element;
-    matrix_transformation[1][2] = 0;
-    matrix_transformation[2][0] = 0;
-    matrix_transformation[2][1] = 0;
-    matrix_transformation[2][2] = element;
+//    matrix_transformation[0][0] = element;
+//    matrix_transformation[0][1] = 0;
+//    matrix_transformation[0][2] = 0;
+//    matrix_transformation[1][0] = 0;
+//    matrix_transformation[1][1] = element;
+//    matrix_transformation[1][2] = 0;
+//    matrix_transformation[2][0] = 0;
+//    matrix_transformation[2][1] = 0;
+//    matrix_transformation[2][2] = element;
+
+
+
     paintGL();
 }
 

@@ -156,14 +156,19 @@ void MainWindow::on_projection_currentIndexChanged(int index)
 }
 
 void MainWindow::on_rotate_x_valueChanged(int value) {
-//  return_x(&ui->openGLWidget->probe, (value - ui->openGLWidget->rotate_x));
-//  ui->openGLWidget->rotate_x = value;
-//  ui->openGLWidget->update();
-//  View::paintGL(probe);
+//    ui->openGLWidget->matrix_alt = matrix_alteration (value*COEF_ROTATE,
+//                                                      (ui->rotate_y->value())*COEF_ROTATE,
+//                                                      (ui->rotate_z->value())*COEF_ROTATE,
+//                                                      (ui->translate_x->value())*COEF_SHIFT,
+//                                                      (ui->translate_y->value())*COEF_SHIFT,
+//                                                       (ui->translate_z->value())*COEF_SHIFT,
+//                                                        (ui->scale_value->value())*COEF_SHIFT);
+
+//  ui->openGLWidget->my_paint();
 }
 
 void MainWindow::on_rotate_y_valueChanged(int value) {
-//  return_y(&ui->openGLWidget->probe, (value - ui->openGLWidget->rotate_y));
+//  return_y (&ui->openGLWidget->probe, (ui->rotate_y->value()));
 //  ui->openGLWidget->rotate_y = value;
 //  ui->openGLWidget->update();
 }

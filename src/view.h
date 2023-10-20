@@ -42,6 +42,9 @@ public:
     double b_red = 0, b_green = 0, b_blue = 0;
     Matrix matrix_transformation = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
+    matrix_t matrix_alt;
+
+
     void my_paint();
 
 protected:
