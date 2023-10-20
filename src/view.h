@@ -35,7 +35,8 @@ public:
     int vert_type = 0;
     int face_type = 0;
     double face_thickness = 1;
-    double vertices_size = 1;
+    GLfloat vertices_size = 10.0;
+    float lines_width = 1.0;
 
     double v_red = 1, v_green = 1, v_blue = 1;
     double f_red = 1, f_green = 1, f_blue = 1;
@@ -43,7 +44,6 @@ public:
     Matrix matrix_transformation = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
 
     matrix_t matrix_alt;
-
 
     void my_paint();
 
@@ -53,8 +53,6 @@ protected:
     void paintGL() override;
 private:
     coordinate transform(coordinate);
-    void divide(Matrix, Matrix, Matrix*);
-    void paint_vertices();
 
 };
 

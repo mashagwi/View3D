@@ -200,3 +200,8 @@ void MainWindow::on_translate_z_valueChanged(int value) {
 //  ui->openGLWidget->update();
 }
 
+void MainWindow::on_hsbWidth_valueChanged(int value)
+{
+    ui->openGLWidget->vertices_size = ui->hsbWidth->value() / 2;
+    ui->openGLWidget->update();
+}

@@ -328,7 +328,7 @@
        <string>Цвет</string>
       </property>
      </widget>
-     <widget class="QScrollBar" name="horizontalScrollBar">
+     <widget class="QScrollBar" name="hsbWidth">
       <property name="geometry">
        <rect>
         <x>100</x>
@@ -336,6 +336,15 @@
         <width>160</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>10</number>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>

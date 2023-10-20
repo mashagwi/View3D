@@ -74,6 +74,8 @@ private slots:
 
     void on_scale_max_clicked();
 
+    void on_hsbWidth_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
 };
