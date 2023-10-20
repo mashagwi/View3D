@@ -3,15 +3,15 @@
 View::View(QWidget *parent) : QOpenGLWidget{parent} {}
 
 void View::initializeGL() {
-  initializeOpenGLFunctions();
+    initializeOpenGLFunctions();
 
-  glClearColor(b_red, b_green, b_blue, 1);
-  glEnable(GL_DEPTH_TEST);
-  glEnable(GL_LIGHT0);
-  glEnable(GL_LIGHTING);
-  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-  glEnable(GL_COLOR_MATERIAL);
-
+    glClearColor(b_red, b_green, b_blue, 1);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHTING);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
+    matrix_alt = s21_create_matrix(4, 4);
 
   //    QOpenGLWidget *widget = new QOpenGLWidget(parent);
   //    QSurfaceFormat format;
@@ -26,11 +26,6 @@ void View::initializeGL() {
 void View::paintGL() {
     glClearColor(b_red, b_green, b_blue, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    if (this->face_type == 1) {
-//        glEnable(GL_LINE_STIPPLE);
-//        glLineStipple(1, 0x00FF);
-//      }
-//    glLineWidth(this->face_thickness);
 
     if(probe != NULL) {
         int index1, index2;
@@ -52,7 +47,7 @@ void View::paintGL() {
                     index2 = probe->faces[i].number_vertex[j + 1] - 1;
                 glBegin(GL_LINES);
                 glColor3f(f_red, f_green, f_blue);
-//                glLineWidth(lines_width);
+                glLineWidth(lines_width);
                 coordinate source = {probe->vertices[index1 * 3], probe->vertices[index1 * 3 + 1], probe->vertices[index1 * 3 + 2]};
                 coordinate destination = transform(source);
                 glVertex3f(destination.x, destination.y, destination.z);
@@ -82,21 +77,20 @@ void View::resizeGL(int w, int h) {
 
 void View::my_paint() {
     float element = COEFF_PART / probe->maxVertexValue;
-    matrix_transformation[0][0] = element;
-    matrix_transformation[0][1] = 0;
-    matrix_transformation[0][2] = 0;
-    matrix_transformation[1][0] = 0;
-    matrix_transformation[1][1] = element;
-    matrix_transformation[1][2] = 0;
-    matrix_transformation[2][0] = 0;
-    matrix_transformation[2][1] = 0;
-    matrix_transformation[2][2] = element;
+    for (int i = 0; i < 3; i++) {
+        matrix_alt.matrix[i][i] = element;
+    }
+    matrix_alt.matrix[3][3] = 1.0;
 }
 
 coordinate View::transform(coordinate input) {
-    coordinate result = {0, 0, 0};
-    result.x = (matrix_transformation[0][0] * input.x + matrix_transformation[0][1] * input.y + matrix_transformation[0][2] * input.z);
-    result.y = (matrix_transformation[1][0] * input.x + matrix_transformation[1][1] * input.y + matrix_transformation[1][2] * input.z);
-    result.z = (matrix_transformation[2][0] * input.x + matrix_transformation[2][1] * input.y + matrix_transformation[2][2] * input.z);
+    matrix_t B = s21_create_matrix(4, 1);
+    B.matrix[0][0] = input.x;
+    B.matrix[1][0] = input.y;
+    B.matrix[2][0] = input.z;
+    B.matrix[3][0] = 1.0;
+    matrix_t C = s21_mult_matrix(&matrix_alt, &B);
+    coordinate result = {C.matrix[0][0], C.matrix[1][0], C.matrix[2][0]};
+    s21_remove_matrix(&B);
     return result;
 }

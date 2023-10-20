@@ -36,7 +36,7 @@ public:
     int face_type = 0;
     double face_thickness = 1;
     GLfloat vertices_size = 10.0;
-    float lines_width = 1.0;
+    GLfloat lines_width = 1.0;
 
     double v_red = 1, v_green = 1, v_blue = 1;
     double f_red = 1, f_green = 1, f_blue = 1;
