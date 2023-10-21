@@ -31,9 +31,9 @@
     <property name="geometry">
      <rect>
       <x>770</x>
-      <y>50</y>
+      <y>22</y>
       <width>311</width>
-      <height>20</height>
+      <height>50</height>
      </rect>
     </property>
     <property name="text">
@@ -533,6 +533,104 @@
      </property>
     </item>
    </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>723</y>
+      <width>350</width>
+      <height>58</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QPushButton" name="button_gif">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: rgb(10, 10, 10);
+	background-color: rgb(30, 189, 154);
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgb(30, 189, 134), stop: 1 rgb(30, 189, 124));
+}</string>
+       </property>
+       <property name="text">
+        <string>Сохранить GIF</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBox_format">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(10, 10, 10);
+background-color: rgb(24, 201, 99);
+</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>BMP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>JPEG</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="button_save">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: rgb(10, 10, 10);
+	background-color: rgb(24, 186, 92);
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgb(15, 125, 61), stop: 1 rgb(15, 125, 57));
+}</string>
+       </property>
+       <property name="text">
+        <string>Сохранить в формате</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QPushButton" name="button_reset">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: rgb(25,25,112);
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgb(125, 200, 215), stop: 1 rgb(125, 185, 205));
+}</string>
+       </property>
+       <property name="text">
+        <string>Очистить</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -540,7 +638,7 @@
      <x>0</x>
      <y>0</y>
      <width>1130</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

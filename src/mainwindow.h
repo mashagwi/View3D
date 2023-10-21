@@ -32,6 +32,9 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    /// @brief Устанавливает начальные значения
+    void sliderSetup();
+
     void default_val();
 
     void on_v_circle_clicked();
@@ -66,15 +69,28 @@ private slots:
 
     void on_translate_z_valueChanged(int value);
 
-
-
     void on_projection_currentIndexChanged(int index);
 
     void on_scale_min_clicked();
 
     void on_scale_max_clicked();
 
+    /// @brief Производит сохранение данных о вершинах линиях и фоне
+    void saveSettings();
+
+    /// @brief Обнуляет все для загрузки нового файла.
+    void on_button_reset_clicked();
+
+    /// @brief Устанавливает все данные в начальные значения
+    void defaultSettings();
+
+    /// @brief Записывает скриншот с выведенной на экран фигуры
+    void on_button_save_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QString settingFile;
+    QFileDialog fileDialog;
+//    QStringList mimeTypes;
 };
 #endif // MAINWINDOW_H

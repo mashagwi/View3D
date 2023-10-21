@@ -13,9 +13,50 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+  sliderSetup();
+  default_val();
 }
 
-MainWindow::~MainWindow() { delete ui; }
+void MainWindow::sliderSetup() {
+  // Translate
+  ui->rotate_x->setRange(0, 100);
+  ui->rotate_x->setSingleStep(1);
+
+  ui->rotate_y->setRange(0, 100);
+  ui->rotate_y->setSingleStep(1);
+
+  ui->rotate_z->setRange(0, 100);
+  ui->rotate_z->setSingleStep(1);
+    // Rotate
+  ui->rotate_x->setRange(0, 360 * 16);
+  ui->rotate_x->setSingleStep(16);
+  ui->rotate_x->setPageStep(15 * 16);
+
+  ui->rotate_y->setRange(0, 360 * 16);
+  ui->rotate_y->setSingleStep(16);
+  ui->rotate_y->setPageStep(15 * 16);
+
+  ui->rotate_z->setRange(0, 360 * 16);
+  ui->rotate_z->setSingleStep(16);
+  ui->rotate_z->setPageStep(15 * 16);
+    // Scale
+  ui->scale_value->setRange(1, 100);
+  ui->scale_value->setSingleStep(1);
+  // Thickness
+  ui->thickness->setRange(1, 100);
+  ui->thickness->setSingleStep(1);
+  // HorizontalScrollBar
+  ui->horizontalScrollBar->setRange(1, 100);
+  ui->horizontalScrollBar->setSingleStep(1);
+
+  ui->v_circle->setChecked(true);
+  ui->f_solid->setChecked(true);
+}
+
+
+MainWindow::~MainWindow() {
+  saveSettings();
+  delete ui; }
 
 void MainWindow::on_pushButton_clicked() {
   QString str;
@@ -43,13 +84,16 @@ void MainWindow::on_pushButton_clicked() {
     ui->openGLWidget->my_paint();
 }
 
+
 void MainWindow::default_val() {
-  ui->translate_x->setValue(0);
-  ui->translate_y->setValue(0);
-  ui->translate_z->setValue(0);
-  ui->rotate_x->setValue(0);
-  ui->rotate_y->setValue(0);
-  ui->rotate_z->setValue(0);
+  ui->translate_x->setValue(50);
+  ui->translate_y->setValue(50);
+  ui->translate_z->setValue(50);
+  ui->rotate_x->setValue(360 * 8);
+  ui->rotate_y->setValue(360 * 8);
+  ui->rotate_z->setValue(360 * 8);
+  ui->scale_value->setValue(50);
+  ui->horizontalScrollBar->setValue(50);
   ui->scale_value->setValue(50);
 }
 
@@ -200,3 +244,63 @@ void MainWindow::on_translate_z_valueChanged(int value) {
 //  ui->openGLWidget->update();
 }
 
+void MainWindow::saveSettings() {
+    QSettings settings(settingFile, QSettings::IniFormat);
+
+    settings.beginGroup("LineSet");
+    settings.setValue("solid", ui->f_solid->isChecked());
+    settings.setValue("dashed", ui->f_dashed->isChecked());
+    settings.setValue("LineColor", ui->check_color_face->palette().color(QPalette::Button));
+    settings.setValue("value", ui->thickness->value());
+    settings.endGroup();
+
+    settings.beginGroup("Verticies");
+    settings.setValue("disable", ui->v_no->isChecked());
+    settings.setValue("circle", ui->v_circle->isChecked());
+    settings.setValue("square", ui->v_square->isChecked());
+    settings.setValue("color", ui->check_color_vert->palette().color(QPalette::Button));
+    settings.setValue("size", ui->horizontalScrollBar->value());
+    settings.endGroup();
+
+    settings.beginGroup("background");
+    settings.setValue("color", ui->check_color_back->palette().color(QPalette::Button));
+    settings.endGroup();
+}
+
+void MainWindow::on_button_reset_clicked() {
+    if (QFile::exists(settingFile)) {
+         QFile::remove(settingFile);
+    }
+    defaultSettings();
+    ui->openGLWidget->update();
+}
+
+void MainWindow::defaultSettings() {
+    default_val();
+
+}
+
+void MainWindow::on_button_save_clicked() {
+    saveSettings();
+    QString format, fileName;
+    int type = ui->comboBox_format->currentIndex();
+    if( type == 0) {
+        format = "bmp";
+    } else {
+         format = "jpeg";
+    }
+    QString initialPath =
+        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    if (initialPath.isEmpty()) initialPath = QDir::currentPath();
+    initialPath += tr(".") + format;
+    QFileDialog fileDialog(this, tr("Сохранить как..."), initialPath);
+    fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog.setFileMode(QFileDialog::AnyFile);
+    fileDialog.setDirectory(initialPath);
+    fileDialog.selectMimeTypeFilter("image/" + format);
+    fileDialog.setDefaultSuffix(format);
+    if (fileDialog.exec() != QDialog::Accepted) return;
+    fileName = fileDialog.selectedFiles().first();
+    QPixmap originalPixmap = QWidget::grab(ui->widget->frameGeometry());
+    originalPixmap.save(fileName);
+}
