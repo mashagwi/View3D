@@ -14,14 +14,8 @@ extern "C" {
 #define RGB_MIN 1
 #define RGB_MAX 255
 #define COEFF_PART 0.8
-
-typedef struct coordinate_t {
-    float x;
-    float y;
-    float z;
-} coordinate;
-
-typedef float Matrix[3][3];
+#define COEFF_ROTATE 0.0628319
+#define COEFF_SHIFT 0.01
 
 class View: public QOpenGLWidget, public QOpenGLFunctions
 {
@@ -37,22 +31,17 @@ public:
     double face_thickness = 1;
     GLfloat vertices_size = 10.0;
     GLfloat lines_width = 1.0;
-
     double v_red = 1, v_green = 1, v_blue = 1;
     double f_red = 1, f_green = 1, f_blue = 1;
     double b_red = 0, b_green = 0, b_blue = 0;
-    Matrix matrix_transformation = {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}};
-
     matrix_t matrix_alt;
-
-    void my_paint();
 
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
 private:
-    coordinate transform(coordinate);
+    void transform(float, float, float, float*, float*, float*);
 
 };
 

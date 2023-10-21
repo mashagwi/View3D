@@ -220,6 +220,15 @@
      </item>
      <item>
       <widget class="QSlider" name="scale_value">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>50</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -466,7 +475,7 @@
      <item>
       <widget class="QSlider" name="translate_x">
        <property name="value">
-        <number>0</number>
+        <number>50</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -475,6 +484,9 @@
      </item>
      <item>
       <widget class="QSlider" name="translate_y">
+       <property name="value">
+        <number>50</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -482,6 +494,9 @@
      </item>
      <item>
       <widget class="QSlider" name="translate_z">
+       <property name="value">
+        <number>50</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

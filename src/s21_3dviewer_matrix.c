@@ -131,17 +131,20 @@ matrix_t scaling(float a) {
 
 matrix_t matrix_alteration(float ax, float ay, float az, float da, float db,
                         float dc, float ka) {
-  matrix_t rotate = rotating(ax, ay, az);
-  matrix_t shift = shifting(da, db, dc);
-  matrix_t scale = scaling(ka);
+    matrix_t rotate = rotating(ax, ay, az);
+    matrix_t shift = shifting(da, db, dc);
+    matrix_t scale = scaling(ka);
 
-  matrix_t rs = s21_mult_matrix(&rotate, &shift);
-  matrix_t result = s21_mult_matrix(&rs, &scale);
+    matrix_t rs = s21_mult_matrix(&rotate, &shift);
+//    matrix_t rs = s21_create_matrix(4, 4);
+//    for (int i = 0; i < 4; i++)
+//        rs.matrix[i][i] = 1.0;
+    matrix_t result = s21_mult_matrix(&rs, &scale);
 
-  s21_remove_matrix(&rotate);
-  s21_remove_matrix(&shift);
-  s21_remove_matrix(&scale);
-  s21_remove_matrix(&rs);
+    s21_remove_matrix(&rotate);
+    s21_remove_matrix(&shift);
+    s21_remove_matrix(&scale);
+    s21_remove_matrix(&rs);
 
   return result;
 }

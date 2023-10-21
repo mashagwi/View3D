@@ -40,17 +40,24 @@ void MainWindow::on_pushButton_clicked() {
     printf("\n");
 
   }
-    ui->openGLWidget->my_paint();
+  ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                    ui->rotate_y->value() * COEFF_ROTATE,
+                                                    ui->rotate_z->value() * COEFF_ROTATE,
+                                                    (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                    (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                    (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                    ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+  ui->openGLWidget->update();
 }
 
 void MainWindow::default_val() {
-  ui->translate_x->setValue(0);
-  ui->translate_y->setValue(0);
-  ui->translate_z->setValue(0);
-  ui->rotate_x->setValue(0);
-  ui->rotate_y->setValue(0);
-  ui->rotate_z->setValue(0);
-  ui->scale_value->setValue(50);
+//  ui->translate_x->setValue(0);
+//  ui->translate_y->setValue(0);
+//  ui->translate_z->setValue(0);
+//  ui->rotate_x->setValue(0);
+//  ui->rotate_y->setValue(0);
+//  ui->rotate_z->setValue(0);
+//  ui->scale_value->setValue(50);
 }
 
 void MainWindow::on_v_circle_clicked() {
@@ -165,18 +172,42 @@ void MainWindow::on_rotate_x_valueChanged(int value) {
 //                                                        (ui->scale_value->value())*COEF_SHIFT);
 
 //  ui->openGLWidget->my_paint();
+    ui->openGLWidget->matrix_alt = matrix_alteration (value * COEFF_ROTATE,
+                                                      ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_z->value() * COEFF_ROTATE,
+                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+    ui->openGLWidget->update();
 }
 
 void MainWindow::on_rotate_y_valueChanged(int value) {
 //  return_y (&ui->openGLWidget->probe, (ui->rotate_y->value()));
 //  ui->openGLWidget->rotate_y = value;
 //  ui->openGLWidget->update();
+    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                      value * COEFF_ROTATE,
+                                                      ui->rotate_z->value() * COEFF_ROTATE,
+                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+    ui->openGLWidget->update();
 }
 
 void MainWindow::on_rotate_z_valueChanged(int value) {
 //  return_z(&ui->openGLWidget->probe, (value - ui->openGLWidget->rotate_z));
 //  ui->openGLWidget->rotate_z = value;
 //  ui->openGLWidget->update();
+    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_y->value() * COEFF_ROTATE,
+                                                      value * COEFF_ROTATE,
+                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+    ui->openGLWidget->update();
 }
 
 void MainWindow::on_translate_x_valueChanged(int value) {
@@ -184,6 +215,14 @@ void MainWindow::on_translate_x_valueChanged(int value) {
 //                                       ui->openGLWidget->normalize_coef / 100);
 //  ui->openGLWidget->translate_x = value;
 //  ui->openGLWidget->update();
+    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_z->value() * COEFF_ROTATE,
+                                                      (value - 50) * COEFF_SHIFT,
+                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+    ui->openGLWidget->update();
 }
 
 void MainWindow::on_translate_y_valueChanged(int value) {
@@ -191,6 +230,14 @@ void MainWindow::on_translate_y_valueChanged(int value) {
 //                                       ui->openGLWidget->normalize_coef / 100);
 //  ui->openGLWidget->translate_y = value;
 //  ui->openGLWidget->update();
+    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_z->value() * COEFF_ROTATE,
+                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                      (value - 50) * COEFF_SHIFT,
+                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+    ui->openGLWidget->update();
 }
 
 void MainWindow::on_translate_z_valueChanged(int value) {
@@ -198,6 +245,14 @@ void MainWindow::on_translate_z_valueChanged(int value) {
 //                                       ui->openGLWidget->normalize_coef / 100);
 //  ui->openGLWidget->translate_z = value;
 //  ui->openGLWidget->update();
+    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_z->value() * COEFF_ROTATE,
+                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                      (value - 50) * COEFF_SHIFT,
+                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+    ui->openGLWidget->update();
 }
 
 void MainWindow::on_hsbWidth_valueChanged(int value)
@@ -205,3 +260,20 @@ void MainWindow::on_hsbWidth_valueChanged(int value)
     ui->openGLWidget->vertices_size = ui->hsbWidth->value() / 2;
     ui->openGLWidget->update();
 }
+
+void MainWindow::on_scale_value_valueChanged(int value)
+{
+    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_y->value() * COEFF_ROTATE,
+                                                      ui->rotate_z->value() * COEFF_ROTATE,
+                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                      value * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+//    printf("matrix:\n %f %f %f %f\n %f %f %f %f\n %f %f %f %f\n %f  %f %f %f\n", ui->openGLWidget->matrix_alt.matrix[0][0], ui->openGLWidget->matrix_alt.matrix[0][1], ui->openGLWidget->matrix_alt.matrix[0][2], ui->openGLWidget->matrix_alt.matrix[0][3],
+//            ui->openGLWidget->matrix_alt.matrix[1][0], ui->openGLWidget->matrix_alt.matrix[1][1], ui->openGLWidget->matrix_alt.matrix[1][2], ui->openGLWidget->matrix_alt.matrix[1][3],
+//            ui->openGLWidget->matrix_alt.matrix[2][0], ui->openGLWidget->matrix_alt.matrix[2][1], ui->openGLWidget->matrix_alt.matrix[2][2], ui->openGLWidget->matrix_alt.matrix[2][3],
+//            ui->openGLWidget->matrix_alt.matrix[3][0], ui->openGLWidget->matrix_alt.matrix[3][1], ui->openGLWidget->matrix_alt.matrix[3][2], ui->openGLWidget->matrix_alt.matrix[3][3]);
+    ui->openGLWidget->update();
+}
+

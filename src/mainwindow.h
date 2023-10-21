@@ -5,8 +5,6 @@
 #include <QFileDialog>
 #include "view.h"
 #include <QSettings>
-#define COEF_SHIFT 0.01
-#define COEF_ROTATE 0.0628319
 
 extern "C" {
      #include "parser.h"
@@ -75,6 +73,8 @@ private slots:
     void on_scale_max_clicked();
 
     void on_hsbWidth_valueChanged(int value);
+
+    void on_scale_value_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;
