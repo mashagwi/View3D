@@ -119,6 +119,10 @@ void MainWindow::default_val() {
 
   ui->v_circle->setChecked(true);
   ui->f_solid->setChecked(true);
+  ui->tabWidget->setCurrentIndex(0);
+  ui->check_color_vert->setStyleSheet("background-color: yellow;");
+  ui->check_color_face->setStyleSheet("background-color: white;");
+  ui->check_color_back->setStyleSheet("background-color: green;");
 }
 
 void MainWindow::on_v_circle_clicked() {
