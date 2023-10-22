@@ -13,9 +13,48 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
+  setWindowTitle("3DViewer_v1.0");
+  sliderSetup();
+  default_val();
 }
 
 MainWindow::~MainWindow() { delete ui; }
+
+void MainWindow::sliderSetup() {
+  // Translate
+  ui->translate_x->setRange(0, 100);
+  ui->translate_x->setSingleStep(1);
+
+  ui->translate_y->setRange(0, 100);
+  ui->translate_y->setSingleStep(1);
+
+  ui->translate_z->setRange(0, 100);
+  ui->translate_z->setSingleStep(1);
+      // Rotate
+  ui->rotate_x->setRange(0, 360);
+  ui->rotate_x->setSingleStep(8);
+  ui->rotate_x->setPageStep(5 * 8);
+
+  ui->rotate_y->setRange(0, 360);
+  ui->rotate_y->setSingleStep(8);
+  ui->rotate_y->setPageStep(5 * 8);
+
+  ui->rotate_z->setRange(0, 360);
+  ui->rotate_z->setSingleStep(8);
+  ui->rotate_z->setPageStep(5 * 8);
+      // Scale
+  ui->scale_value->setRange(1, 100);
+  ui->scale_value->setSingleStep(1);
+  // Thickness
+  ui->thickness->setRange(1, 100);
+  ui->thickness->setSingleStep(1);
+  // HorizontalScrollBar
+    ui->hsbWidth->setRange(1, 100);
+    ui->hsbWidth->setSingleStep(1);
+
+  ui->v_circle->setChecked(true);
+  ui->f_solid->setChecked(true);
+}
 
 void MainWindow::on_pushButton_clicked() {
   QString str;
@@ -51,13 +90,26 @@ void MainWindow::on_pushButton_clicked() {
 }
 
 void MainWindow::default_val() {
-//  ui->translate_x->setValue(0);
-//  ui->translate_y->setValue(0);
-//  ui->translate_z->setValue(0);
-//  ui->rotate_x->setValue(0);
-//  ui->rotate_y->setValue(0);
-//  ui->rotate_z->setValue(0);
-//  ui->scale_value->setValue(50);
+  ui->translate_x->setValue(50);
+  ui->translate_y->setValue(50);
+  ui->translate_z->setValue(50);
+  ui->translate_lcd_x->setText(QString::number(0));
+  ui->translate_lcd_y->setText(QString::number(0));
+  ui->translate_lcd_z->setText(QString::number(0));
+
+  ui->rotate_x->setValue(180);
+//  ui->rotate_y->setValue(180);
+//  ui->rotate_z->setValue(180);
+  ui->roteta_lcd_x->setText(QString::number(0));
+  ui->roteta_lcd_y->setText(QString::number(0));
+  ui->roteta_lcd_z->setText(QString::number(0));
+
+  ui->scale_value->setValue(50);
+  ui->hsbWidth->setValue(1);
+  ui->scale_value->setValue(50);
+
+  ui->v_circle->setChecked(true);
+  ui->f_solid->setChecked(true);
 }
 
 void MainWindow::on_v_circle_clicked() {
@@ -274,6 +326,38 @@ void MainWindow::on_scale_value_valueChanged(int value)
 //            ui->openGLWidget->matrix_alt.matrix[1][0], ui->openGLWidget->matrix_alt.matrix[1][1], ui->openGLWidget->matrix_alt.matrix[1][2], ui->openGLWidget->matrix_alt.matrix[1][3],
 //            ui->openGLWidget->matrix_alt.matrix[2][0], ui->openGLWidget->matrix_alt.matrix[2][1], ui->openGLWidget->matrix_alt.matrix[2][2], ui->openGLWidget->matrix_alt.matrix[2][3],
 //            ui->openGLWidget->matrix_alt.matrix[3][0], ui->openGLWidget->matrix_alt.matrix[3][1], ui->openGLWidget->matrix_alt.matrix[3][2], ui->openGLWidget->matrix_alt.matrix[3][3]);
+    ui->openGLWidget->update();
+}
+
+
+void MainWindow::on_save_screenshot_clicked() {
+    QString format, fileName;
+    int type = ui->format->currentIndex();
+    if( type == 0) {
+         format = "bmp";
+    } else {
+         format = "jpeg";
+    }
+
+    QString initialPath =
+    QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    if (initialPath.isEmpty()) initialPath = QDir::currentPath();
+    initialPath += tr(".") + format;
+    QFileDialog fileDialog(this, tr("Сохранить как..."), initialPath);
+    fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+    fileDialog.setFileMode(QFileDialog::AnyFile);
+    fileDialog.setDirectory(initialPath);
+    fileDialog.selectMimeTypeFilter("image/" + format);
+    fileDialog.setDefaultSuffix(format);
+    if (fileDialog.exec() != QDialog::Accepted) return;
+    fileName = fileDialog.selectedFiles().first();
+    QPixmap originalPixmap = QWidget::grab(ui->widget->frameGeometry());
+    originalPixmap.save(fileName);
+}
+
+
+void MainWindow::on_reset_clicked() {
+    default_val();
     ui->openGLWidget->update();
 }
 

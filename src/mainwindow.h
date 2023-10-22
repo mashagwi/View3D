@@ -28,6 +28,9 @@ public:
     ~MainWindow();
 
 private slots:
+    /// @brief Устанавливает начальные значения
+    void sliderSetup();
+
     void on_pushButton_clicked();
 
     void default_val();
@@ -75,6 +78,12 @@ private slots:
     void on_hsbWidth_valueChanged(int value);
 
     void on_scale_value_valueChanged(int value);
+
+    /// @brief Сохраняет скрин в выбранном формате
+    void on_save_screenshot_clicked();
+
+    /// @brief Сбрасывает все в начальное состояние
+    void on_reset_clicked();
 
 private:
     Ui::MainWindow *ui;
