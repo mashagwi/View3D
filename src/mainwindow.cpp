@@ -14,6 +14,11 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
   setWindowTitle("3DViewer_v1.0");
+
+  timer = new QTimer;
+  gifImage = new QImage[50]{};
+  connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
+
   sliderSetup();
   default_val();
   connectSetup();
@@ -31,7 +36,7 @@ void MainWindow::sliderSetup() {
 
   ui->translate_z->setRange(0, 100);
   ui->translate_z->setSingleStep(1);
-      // Rotate
+  // Rotate
   ui->rotate_x->setRange(0, 360);
   ui->rotate_x->setSingleStep(8);
   ui->rotate_x->setPageStep(5 * 8);
@@ -43,18 +48,46 @@ void MainWindow::sliderSetup() {
   ui->rotate_z->setRange(0, 360);
   ui->rotate_z->setSingleStep(8);
   ui->rotate_z->setPageStep(5 * 8);
-      // Scale
+  // Scale
   ui->scale_value->setRange(1, 100);
   ui->scale_value->setSingleStep(1);
   // Thickness
   ui->thickness->setRange(1, 100);
   ui->thickness->setSingleStep(1);
   // HorizontalScrollBar
-    ui->hsbWidth->setRange(1, 100);
-    ui->hsbWidth->setSingleStep(1);
+  ui->hsbWidth->setRange(1, 100);
+  ui->hsbWidth->setSingleStep(1);
 
   ui->v_circle->setChecked(true);
   ui->f_solid->setChecked(true);
+}
+
+void MainWindow::default_val() {
+  ui->translate_x->setValue(50);
+  ui->translate_y->setValue(50);
+  ui->translate_z->setValue(50);
+  ui->translate_lcd_x->setText(QString::number(0));
+  ui->translate_lcd_y->setText(QString::number(0));
+  ui->translate_lcd_z->setText(QString::number(0));
+
+  ui->rotate_x->setValue(180);
+  ui->rotate_y->setValue(180);
+  ui->rotate_z->setValue(180);
+  ui->roteta_lcd_x->setText(QString::number(0));
+  ui->roteta_lcd_y->setText(QString::number(0));
+  ui->roteta_lcd_z->setText(QString::number(0));
+
+  ui->scale_value->setValue(50);
+  ui->hsbWidth->setValue(1);
+  ui->scale_value->setValue(50);
+
+  ui->v_circle->setChecked(true);
+  ui->f_solid->setChecked(true);
+  ui->tabWidget->setCurrentIndex(0);
+  ui->check_color_vert->setStyleSheet("background-color: yellow;");
+  ui->check_color_face->setStyleSheet("background-color: black;");
+  ui->check_color_back->setStyleSheet("background-color: green;");
+  ui->openGLWidget->update();
 }
 
 void MainWindow::connectSetup() {
@@ -97,33 +130,6 @@ void MainWindow::on_pushButton_clicked() {
                                                     (ui->translate_z->value() - 50) * COEFF_SHIFT,
                                                     ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
   ui->openGLWidget->update();
-}
-
-void MainWindow::default_val() {
-  ui->translate_x->setValue(50);
-  ui->translate_y->setValue(50);
-  ui->translate_z->setValue(50);
-  ui->translate_lcd_x->setText(QString::number(0));
-  ui->translate_lcd_y->setText(QString::number(0));
-  ui->translate_lcd_z->setText(QString::number(0));
-
-  ui->rotate_x->setValue(180);
-  ui->rotate_y->setValue(180);
-  ui->rotate_z->setValue(180);
-  ui->roteta_lcd_x->setText(QString::number(0));
-  ui->roteta_lcd_y->setText(QString::number(0));
-  ui->roteta_lcd_z->setText(QString::number(0));
-
-  ui->scale_value->setValue(50);
-  ui->hsbWidth->setValue(1);
-  ui->scale_value->setValue(50);
-
-  ui->v_circle->setChecked(true);
-  ui->f_solid->setChecked(true);
-  ui->tabWidget->setCurrentIndex(0);
-  ui->check_color_vert->setStyleSheet("background-color: yellow;");
-  ui->check_color_face->setStyleSheet("background-color: black;");
-  ui->check_color_back->setStyleSheet("background-color: green;");
 }
 
 void MainWindow::on_v_circle_clicked() {
@@ -388,7 +394,6 @@ void MainWindow::on_save_screenshot_clicked() {
     } else {
          format = "jpeg";
     }
-
     QString initialPath =
     QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
     if (initialPath.isEmpty()) initialPath = QDir::currentPath();
@@ -407,8 +412,34 @@ void MainWindow::on_save_screenshot_clicked() {
 
 
 void MainWindow::on_reset_clicked() {
-//    sliderSetup();
     default_val();
     ui->openGLWidget->update();
 }
 
+
+void MainWindow::on_save_gif_clicked() {
+    ui->save_gif->setEnabled(false);
+    timer->start(100);
+}
+
+void MainWindow::slotTimer() {
+    if (gifTime < 50) {
+        gifImage[gifTime] = ui->openGLWidget->grab().toImage();
+         ++gifTime;
+    } else {
+        QDateTime dateTime = dateTime.currentDateTime();
+        QString currentDateTime = dateTime.toString("dd.MM.yy_HH.mm.ss");
+        QString fileName = QFileDialog::getSaveFileName(
+            this, "Save GIF", "GIF_" + currentDateTime, "GIF (*.gif)");
+
+        gif = new QGifImage;
+        for (int i = 0; i < gifTime; ++i) {
+            gif->addFrame(gifImage[i], 0);
+        }
+        gif->save(fileName);
+        ui->save_gif->setEnabled(true);
+        timer->stop();
+        delete gif;
+        gifTime = 0;
+    }
+}

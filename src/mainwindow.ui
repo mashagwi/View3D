@@ -91,7 +91,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -157,7 +157,7 @@
            <number>100</number>
           </property>
           <property name="value">
-           <number>10</number>
+           <number>1</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -285,7 +285,7 @@
      <rect>
       <x>750</x>
       <y>720</y>
-      <width>329</width>
+      <width>348</width>
       <height>58</height>
      </rect>
     </property>
@@ -297,15 +297,19 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="save_gif">
-       <property name="text">
-        <string>Сохранить GIF</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="2">
       <widget class="QPushButton" name="reset">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	color: white;
+	background-color: rgb(25,25,112);
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 rgb(125, 200, 215), stop: 1 rgb(125, 185, 205));
+}</string>
+       </property>
        <property name="text">
         <string>Сбросить</string>
        </property>
@@ -323,6 +327,19 @@
          <string>JPEG</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="save_gif">
+       <property name="minimumSize">
+        <size>
+         <width>109</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Сохранить GIF</string>
+       </property>
       </widget>
      </item>
     </layout>

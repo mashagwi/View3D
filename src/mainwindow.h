@@ -5,6 +5,9 @@
 #include <QFileDialog>
 #include "view.h"
 #include <QSettings>
+#include <QTimer>
+
+#include "qgifimage.h"
 
 extern "C" {
      #include "parser.h"
@@ -32,7 +35,7 @@ private slots:
     /// @brief Устанавливает начальные значения
     void sliderSetup();
 
-    /// @brief Устанавливает связю с изменением значений
+    /// @brief Устанавливает связь с изменением значений
     void connectSetup();
 
     void on_pushButton_clicked();
@@ -71,8 +74,6 @@ private slots:
 
     void on_translate_z_valueChanged(int value);
 
-
-
     void on_projection_currentIndexChanged(int index);
 
     void on_scale_min_clicked();
@@ -89,7 +90,18 @@ private slots:
     /// @brief Сбрасывает все в начальное состояние
     void on_reset_clicked();
 
+    /// @brief Запускает таймер для создания gif
+    void on_save_gif_clicked();
+
+    /// @brief Делает gif и сохраняет
+    void slotTimer();
+
 private:
     Ui::MainWindow *ui;
+//    QString settingFile;
+    QTimer *timer;
+    QGifImage *gif;
+    QImage *gifImage;
+    int gifTime = 0;
 };
 #endif // MAINWINDOW_H
