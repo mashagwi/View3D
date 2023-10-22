@@ -390,24 +390,24 @@ void MainWindow::on_save_screenshot_clicked() {
     QString format, fileName;
     int type = ui->format->currentIndex();
     if( type == 0) {
-         format = "bmp";
+         format = ".bmp";
     } else {
-         format = "jpeg";
+         format = ".jpeg";
     }
-    QString initialPath =
-    QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
-    if (initialPath.isEmpty()) initialPath = QDir::currentPath();
-    initialPath += tr(".") + format;
-    QFileDialog fileDialog(this, tr("Сохранить как..."), initialPath);
-    fileDialog.setAcceptMode(QFileDialog::AcceptSave);
-    fileDialog.setFileMode(QFileDialog::AnyFile);
-    fileDialog.setDirectory(initialPath);
-    fileDialog.selectMimeTypeFilter("image/" + format);
-    fileDialog.setDefaultSuffix(format);
-    if (fileDialog.exec() != QDialog::Accepted) return;
-    fileName = fileDialog.selectedFiles().first();
-    QPixmap originalPixmap = QWidget::grab(ui->widget->frameGeometry());
-    originalPixmap.save(fileName);
+    QFileDialog dialogPhoto(this);
+    QDateTime dateTime = dateTime.currentDateTime();
+    QString currentDateTime = dateTime.toString("dd.MM.yy_HH.mm.ss");
+    fileName = QFileDialog::getSaveFileName(
+        this, "Сохранить как...", "Screenshot_" + currentDateTime + format);
+    if (!fileName.isEmpty()) {
+        QImage photo = ui->openGLWidget->grab().toImage();
+        QString extension = QFileInfo(fileName).suffix();
+        if (extension.toLower() == "bmp") {
+            photo.save(fileName, "BMP");
+        } else if (extension.toLower() == "jpeg" || extension.toLower() == "jpg") {
+            photo.save(fileName, "JPEG");
+        }
+    }
 }
 
 
@@ -430,7 +430,7 @@ void MainWindow::slotTimer() {
         QDateTime dateTime = dateTime.currentDateTime();
         QString currentDateTime = dateTime.toString("dd.MM.yy_HH.mm.ss");
         QString fileName = QFileDialog::getSaveFileName(
-            this, "Save GIF", "GIF_" + currentDateTime, "GIF (*.gif)");
+            this, "Сохранение GIF", "GIF_" + currentDateTime, "GIF (*.gif)");
 
         gif = new QGifImage;
         for (int i = 0; i < gifTime; ++i) {
