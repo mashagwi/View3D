@@ -28,17 +28,15 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
+    void set_info(QString filename, int verticles, int lines);
 
-    void default_val();
+    void on_pushButton_clicked();
 
     void on_v_circle_clicked();
 
     void on_v_square_clicked();
 
     void on_v_no_clicked();
-
-//    void on_scale_valueChanged(int value);
 
     void on_f_solid_clicked();
 
@@ -63,8 +61,6 @@ private slots:
     void on_translate_y_valueChanged(int value);
 
     void on_translate_z_valueChanged(int value);
-
-
 
     void on_projection_currentIndexChanged(int index);
 
