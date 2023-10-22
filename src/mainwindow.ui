@@ -91,7 +91,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -420,7 +420,7 @@
       <widget class="QLabel" name="roteta_lcd_x">
        <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>30</width>
          <height>20</height>
         </size>
        </property>
@@ -465,7 +465,7 @@
       <widget class="QLabel" name="roteta_lcd_z">
        <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>30</width>
          <height>20</height>
         </size>
        </property>
@@ -487,7 +487,7 @@
       <widget class="QLabel" name="roteta_lcd_y">
        <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>30</width>
          <height>20</height>
         </size>
        </property>
@@ -547,7 +547,7 @@
       <widget class="QLabel" name="translate_lcd_y">
        <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>30</width>
          <height>20</height>
         </size>
        </property>
@@ -569,7 +569,7 @@
       <widget class="QLabel" name="translate_lcd_x">
        <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>30</width>
          <height>20</height>
         </size>
        </property>
@@ -676,7 +676,7 @@
       <widget class="QLabel" name="translate_lcd_z">
        <property name="minimumSize">
         <size>
-         <width>20</width>
+         <width>30</width>
          <height>20</height>
         </size>
        </property>

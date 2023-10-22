@@ -56,6 +56,15 @@ void MainWindow::sliderSetup() {
   ui->f_solid->setChecked(true);
 }
 
+void MainWindow::connectSetup() {
+  connect(ui->rotate_x, SIGNAL(valueChanged(int)), this, SLOT(on_rotate_x_valueChanged(int value)));
+  connect(ui->rotate_y, SIGNAL(valueChanged(int)), this, SLOT(on_rotate_y_valueChanged(int value)));
+  connect(ui->rotate_z, SIGNAL(valueChanged(int)), this, SLOT(on_rotate_z_valueChanged(int value)));
+  connect(ui->translate_x, SIGNAL(valueChanged(int)), this, SLOT(on_translate_x_valueChanged(int value)));
+  connect(ui->translate_y, SIGNAL(valueChanged(int)), this, SLOT(on_translate_y_valueChanged(int value)));
+  connect(ui->translate_z, SIGNAL(valueChanged(int)), this, SLOT(on_translate_z_valueChanged(int value)));
+}
+
 void MainWindow::on_pushButton_clicked() {
   QString str;
   str = QFileDialog::getOpenFileName(this, "Выбрать файл",
@@ -98,8 +107,8 @@ void MainWindow::default_val() {
   ui->translate_lcd_z->setText(QString::number(0));
 
   ui->rotate_x->setValue(180);
-//  ui->rotate_y->setValue(180);
-//  ui->rotate_z->setValue(180);
+  ui->rotate_y->setValue(180);
+  ui->rotate_z->setValue(180);
   ui->roteta_lcd_x->setText(QString::number(0));
   ui->roteta_lcd_y->setText(QString::number(0));
   ui->roteta_lcd_z->setText(QString::number(0));
@@ -132,8 +141,8 @@ void MainWindow::on_v_no_clicked() {
 //  //    ui->openGLWidget->update();
 //}
 
-void MainWindow::on_scale_min_clicked()
-{
+void MainWindow::on_scale_min_clicked() {
+
     ui->scale_value->setValue(ui->scale_value->value() - 10);
 }
 
@@ -215,6 +224,8 @@ void MainWindow::on_projection_currentIndexChanged(int index)
 }
 
 void MainWindow::on_rotate_x_valueChanged(int value) {
+    ui->roteta_lcd_x->setText(QString::number(value - 180)); // отобразает изминение показаний
+
 //    ui->openGLWidget->matrix_alt = matrix_alteration (value*COEF_ROTATE,
 //                                                      (ui->rotate_y->value())*COEF_ROTATE,
 //                                                      (ui->rotate_z->value())*COEF_ROTATE,
@@ -224,86 +235,120 @@ void MainWindow::on_rotate_x_valueChanged(int value) {
 //                                                        (ui->scale_value->value())*COEF_SHIFT);
 
 //  ui->openGLWidget->my_paint();
-    ui->openGLWidget->matrix_alt = matrix_alteration (value * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+
+
+
+
+//    ui->openGLWidget->matrix_alt = matrix_alteration (value * COEFF_ROTATE,
+//                                                      ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_z->value() * COEFF_ROTATE,
+//                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+//                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
     ui->openGLWidget->update();
 }
 
 void MainWindow::on_rotate_y_valueChanged(int value) {
+    ui->roteta_lcd_y->setText(QString::number(value - 180)); // отобразает изминение показаний
+
 //  return_y (&ui->openGLWidget->probe, (ui->rotate_y->value()));
 //  ui->openGLWidget->rotate_y = value;
 //  ui->openGLWidget->update();
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      value * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+
+
+
+//    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      value * COEFF_ROTATE,
+//                                                      ui->rotate_z->value() * COEFF_ROTATE,
+//                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+//                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
     ui->openGLWidget->update();
 }
 
 void MainWindow::on_rotate_z_valueChanged(int value) {
+    ui->roteta_lcd_z->setText(QString::number(value - 180)); // отобразает изминение показаний
+
+
 //  return_z(&ui->openGLWidget->probe, (value - ui->openGLWidget->rotate_z));
 //  ui->openGLWidget->rotate_z = value;
 //  ui->openGLWidget->update();
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      value * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+
+
+
+
+//    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      value * COEFF_ROTATE,
+//                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+//                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
     ui->openGLWidget->update();
 }
 
 void MainWindow::on_translate_x_valueChanged(int value) {
+    ui->translate_lcd_x->setText(QString::number(value - 50)); // отобразает изминение показаний
+
+
 //  move_X(&ui->openGLWidget->probe, (value - ui->openGLWidget->translate_x) *
 //                                       ui->openGLWidget->normalize_coef / 100);
 //  ui->openGLWidget->translate_x = value;
 //  ui->openGLWidget->update();
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (value - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+
+
+//    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_z->value() * COEFF_ROTATE,
+//                                                      (value - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+//                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
     ui->openGLWidget->update();
 }
 
 void MainWindow::on_translate_y_valueChanged(int value) {
+    ui->translate_lcd_y->setText(QString::number(value - 50)); // отобразает изминение показаний
+
+
+
 //  move_Y(&ui->openGLWidget->probe, (value - ui->openGLWidget->translate_y) *
 //                                       ui->openGLWidget->normalize_coef / 100);
 //  ui->openGLWidget->translate_y = value;
 //  ui->openGLWidget->update();
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (value - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+
+
+
+//    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_z->value() * COEFF_ROTATE,
+//                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+//                                                      (value - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
+//                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
     ui->openGLWidget->update();
 }
 
 void MainWindow::on_translate_z_valueChanged(int value) {
+        ui->translate_lcd_z->setText(QString::number(value - 50)); // отобразает изминение показаний
+
+
 //  move_Z(&ui->openGLWidget->probe, (value - ui->openGLWidget->translate_z) *
 //                                       ui->openGLWidget->normalize_coef / 100);
 //  ui->openGLWidget->translate_z = value;
 //  ui->openGLWidget->update();
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (value - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+
+
+
+//        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_y->value() * COEFF_ROTATE,
+//                                                      ui->rotate_z->value() * COEFF_ROTATE,
+//                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
+//                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
+//                                                      (value - 50) * COEFF_SHIFT,
+//                                                      ui->scale_value->value() * COEFF_PART / 50.0 / ui->openGLWidget->probe->maxVertexValue);
     ui->openGLWidget->update();
 }
 
@@ -357,6 +402,7 @@ void MainWindow::on_save_screenshot_clicked() {
 
 
 void MainWindow::on_reset_clicked() {
+//    sliderSetup();
     default_val();
     ui->openGLWidget->update();
 }

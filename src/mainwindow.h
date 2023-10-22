@@ -28,8 +28,12 @@ public:
     ~MainWindow();
 
 private slots:
+
     /// @brief Устанавливает начальные значения
     void sliderSetup();
+
+    /// @brief Устанавливает связю с изменением значений
+    void connectSetup();
 
     void on_pushButton_clicked();
 
