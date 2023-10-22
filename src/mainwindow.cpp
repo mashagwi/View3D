@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
   setWindowTitle("3DViewer_v1.0");
   sliderSetup();
   default_val();
+  connectSetup();
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -121,7 +122,7 @@ void MainWindow::default_val() {
   ui->f_solid->setChecked(true);
   ui->tabWidget->setCurrentIndex(0);
   ui->check_color_vert->setStyleSheet("background-color: yellow;");
-  ui->check_color_face->setStyleSheet("background-color: white;");
+  ui->check_color_face->setStyleSheet("background-color: black;");
   ui->check_color_back->setStyleSheet("background-color: green;");
 }
 
