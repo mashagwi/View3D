@@ -38,9 +38,13 @@ private slots:
     /// @brief Устанавливает связь с изменением значений
     void connectSetup();
 
-    void on_pushButton_clicked();
-
+    /// @brief Устанавливает начальные значения и настройки
     void default_val();
+
+    /// @brief Сохраняет настройки
+    void saveSettings();
+
+    void on_pushButton_clicked();
 
     void on_v_circle_clicked();
 
@@ -98,7 +102,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-//    QString settingFile;
+    QString settingFile;
     QTimer *timer;
     QGifImage *gif;
     QImage *gifImage;

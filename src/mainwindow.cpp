@@ -18,13 +18,18 @@ MainWindow::MainWindow(QWidget *parent)
   timer = new QTimer;
   gifImage = new QImage[50]{};
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
+  this->settingFile = QApplication::applicationDirPath() + "/settings.conf";
 
   sliderSetup();
   default_val();
   connectSetup();
 }
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+  saveSettings();
+  delete timer;
+  delete[] gifImage;
+  delete ui; }
 
 void MainWindow::sliderSetup() {
   // Translate
@@ -57,9 +62,6 @@ void MainWindow::sliderSetup() {
   // HorizontalScrollBar
   ui->hsbWidth->setRange(1, 100);
   ui->hsbWidth->setSingleStep(1);
-
-  ui->v_circle->setChecked(true);
-  ui->f_solid->setChecked(true);
 }
 
 void MainWindow::default_val() {
@@ -81,13 +83,62 @@ void MainWindow::default_val() {
   ui->hsbWidth->setValue(1);
   ui->scale_value->setValue(50);
 
-  ui->v_circle->setChecked(true);
-  ui->f_solid->setChecked(true);
-  ui->tabWidget->setCurrentIndex(0);
-  ui->check_color_vert->setStyleSheet("background-color: yellow;");
-  ui->check_color_face->setStyleSheet("background-color: black;");
-  ui->check_color_back->setStyleSheet("background-color: green;");
-  ui->openGLWidget->update();
+  if (QFile::exists(settingFile)) {
+      QSettings settings(settingFile, QSettings::IniFormat);
+      settings.beginGroup("LineSet");
+      if (settings.value("solid").toBool()) {
+          ui->f_solid->setChecked(true);
+      } else if (settings.value("dashed").toBool()) {
+          ui->f_dashed->setChecked(true);
+      }
+      ui->check_color_face->setPalette(QPalette(settings.value("LineColor").value<QColor>()));
+      ui->thickness->setValue(settings.value("value").toInt());
+      settings.endGroup();
+
+      settings.beginGroup("Verticies");
+      if (settings.value("disable").toBool()) {
+          ui->v_no->setChecked(true);
+      } else if (settings.value("circle").toBool()) {
+          ui->v_circle->setChecked(true);
+      } else if (settings.value("square").toBool()) {
+          ui->v_square->setChecked(true);
+      }
+      if (settings.value("color").toString().length() > 0) {
+          ui->check_color_vert->setPalette(QPalette(settings.value("color").value<QColor>()));
+      }
+      ui->hsbWidth->setValue(settings.value("size").toInt());
+      settings.endGroup();
+
+      settings.beginGroup("background");
+      if (settings.value("color").toString().length() > 0) {
+          ui->check_color_back->setPalette(QPalette(settings.value("color").value<QColor>()));
+      }
+      settings.endGroup();
+  }
+
+}
+
+void MainWindow::saveSettings() {
+  QSettings settings(settingFile, QSettings::IniFormat);
+
+  settings.beginGroup("LineSet");
+  settings.setValue("solid", ui->f_solid->isChecked());
+  settings.setValue("dashed", ui->f_dashed->isChecked());
+  settings.setValue("LineColor", ui->check_color_face->palette().color(QPalette::Button));
+  settings.setValue("value", ui->thickness->value());
+  settings.endGroup();
+
+  settings.beginGroup("Verticies");
+  settings.setValue("disable", ui->v_no->isChecked());
+  settings.setValue("circle", ui->v_circle->isChecked());
+  settings.setValue("square", ui->v_square->isChecked());
+  settings.setValue("color", ui->check_color_vert->palette().color(QPalette::Button));
+  settings.setValue("size", ui->hsbWidth->value());
+  settings.endGroup();
+
+  settings.beginGroup("background");
+  settings.setValue("color", ui->check_color_back->palette().color(QPalette::Button));
+  settings.endGroup();
 }
 
 void MainWindow::connectSetup() {
@@ -387,6 +438,7 @@ void MainWindow::on_scale_value_valueChanged(int value)
 
 
 void MainWindow::on_save_screenshot_clicked() {
+    saveSettings();
     QString format, fileName;
     int type = ui->format->currentIndex();
     if( type == 0) {
@@ -418,6 +470,7 @@ void MainWindow::on_reset_clicked() {
 
 
 void MainWindow::on_save_gif_clicked() {
+    saveSettings();
     ui->save_gif->setEnabled(false);
     timer->start(100);
 }
