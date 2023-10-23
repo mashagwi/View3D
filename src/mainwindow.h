@@ -22,7 +22,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
 
     enum vert_type { NO, CIRCLE, SQUARE };
-    enum face_type { SOLID, DASHED };
+    enum face_type { SOLID, DASHED, NONE };
     enum project_type { PARALLEL, CENTRAL };
 
     ~MainWindow();
@@ -71,6 +71,8 @@ private slots:
     void on_hsbWidth_valueChanged(int value);
 
     void on_scale_value_valueChanged(int value);
+
+    void on_f_no_clicked();
 
 private:
     Ui::MainWindow *ui;
