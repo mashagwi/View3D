@@ -16,6 +16,7 @@ extern "C" {
 #define COEFF_PART 0.8
 #define COEFF_ROTATE 0.0628319
 #define COEFF_SHIFT 0.01
+#define COEFF_SCALE 0.6
 
 class View: public QOpenGLWidget, public QOpenGLFunctions
 {

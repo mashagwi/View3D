@@ -62,6 +62,21 @@ int s21_correct_matrix(matrix_t A) {
   return err;
 }
 
+int s21_eq_matrix(matrix_t* A, matrix_t* B) {
+  int result = EXIT_FAILURE;
+  if (!s21_correct_matrix(*A) && !s21_correct_matrix(*B)) {
+    result = EXIT_SUCCESS;
+    for (int i = 0; i < A->rows && result == EXIT_SUCCESS; i++) {
+      for (int j = 0; j < A->columns && result == EXIT_SUCCESS; j++) {
+        if (fabs(A->matrix[i][j] - B->matrix[i][j]) > EPS) {
+          result = EXIT_FAILURE;
+        }
+      }
+    }
+  }
+  return result;
+}
+
 matrix_t return_x(float a) {
   matrix_t result = s21_create_matrix(4, 4);
   result.matrix[0][0] = result.matrix[3][3] = 1.0;

@@ -5,7 +5,6 @@
 #include <QFileDialog>
 #include "view.h"
 #include <QSettings>
-#include <QTimer>
 
 #include "qgifimage.h"
 
@@ -31,18 +30,11 @@ public:
     ~MainWindow();
 
 private slots:
-
-    /// @brief Устанавливает начальные значения
-    void sliderSetup();
-
-    /// @brief Устанавливает связь с изменением значений
-    void connectSetup();
-
-    /// @brief Устанавливает начальные значения и настройки
     void default_val();
 
-    /// @brief Сохраняет настройки
     void saveSettings();
+
+    void set_info(QString filename, int verticles, int lines);
 
     void on_pushButton_clicked();
 
@@ -51,8 +43,6 @@ private slots:
     void on_v_square_clicked();
 
     void on_v_no_clicked();
-
-//    void on_scale_valueChanged(int value);
 
     void on_f_solid_clicked();
 
@@ -102,6 +92,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
     QString settingFile;
     QTimer *timer;
     QGifImage *gif;

@@ -52,7 +52,7 @@ dist: clean
 	tar -zcf s21_smartcalc.tgz ./*
 	
 clean:
-	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz html latex ../build
+	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz html latex ../build*
 #	cd docs; rm -rf html latex
 
 format: 

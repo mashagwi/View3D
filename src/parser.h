@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define EPS 1e-07
+
 typedef struct face_t {
   int* number_vertex;  // массив индексов вершин
   int count_number_vertex;  // количество вершин в полигоне
@@ -51,6 +53,8 @@ void s21_remove_matrix(matrix_t* A);
 matrix_t s21_mult_matrix(matrix_t* A, matrix_t* B);
 
 int s21_correct_matrix(matrix_t A);
+
+int s21_eq_matrix(matrix_t* A, matrix_t* B);
 
 matrix_t return_x(float a);  // вращение вокруг оси X
 
