@@ -81,8 +81,7 @@ private slots:
     /// @brief Сохраняет скрин в выбранном формате
     void on_save_screenshot_clicked();
 
-    /// @brief Сбрасывает все в начальное состояние
-    void on_reset_clicked();
+
 
     /// @brief Запускает таймер для создания gif
     void on_save_gif_clicked();

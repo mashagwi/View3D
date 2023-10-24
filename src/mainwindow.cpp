@@ -224,69 +224,81 @@ void MainWindow::on_projection_currentIndexChanged(int index)
 }
 
 void MainWindow::on_rotate_x_valueChanged(int value) {
-    ui->openGLWidget->matrix_alt = matrix_alteration (value * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (value * COEFF_ROTATE,
+                                                          ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_z->value() * COEFF_ROTATE,
+                                                          (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                          ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_rotate_y_valueChanged(int value) {
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
-                                                      value * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
+                                                          value * COEFF_ROTATE,
+                                                          ui->rotate_z->value() * COEFF_ROTATE,
+                                                          (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                          ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_rotate_z_valueChanged(int value) {
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      value * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_y->value() * COEFF_ROTATE,
+                                                          value * COEFF_ROTATE,
+                                                          (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                          ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_translate_x_valueChanged(int value) {
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (value - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_z->value() * COEFF_ROTATE,
+                                                          (value - 50) * COEFF_SHIFT,
+                                                          (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                          ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_translate_y_valueChanged(int value) {
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (value - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_z->value() * COEFF_ROTATE,
+                                                          (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                          (value - 50) * COEFF_SHIFT,
+                                                          (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                          ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_translate_z_valueChanged(int value) {
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (value - 50) * COEFF_SHIFT,
-                                                      ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_z->value() * COEFF_ROTATE,
+                                                          (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                          (value - 50) * COEFF_SHIFT,
+                                                          ui->scale_value->value() * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_hsbWidth_valueChanged(int value)
@@ -297,14 +309,16 @@ void MainWindow::on_hsbWidth_valueChanged(int value)
 
 void MainWindow::on_scale_value_valueChanged(int value)
 {
-    ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
-                                                      ui->rotate_y->value() * COEFF_ROTATE,
-                                                      ui->rotate_z->value() * COEFF_ROTATE,
-                                                      (ui->translate_x->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_y->value() - 50) * COEFF_SHIFT,
-                                                      (ui->translate_z->value() - 50) * COEFF_SHIFT,
-                                                      value * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
-    ui->openGLWidget->update();
+    if (ui->openGLWidget->probe != NULL) {
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
+                                                          ui->rotate_y->value() * COEFF_ROTATE,
+                                                          ui->rotate_z->value() * COEFF_ROTATE,
+                                                          (ui->translate_x->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_y->value() - 50) * COEFF_SHIFT,
+                                                          (ui->translate_z->value() - 50) * COEFF_SHIFT,
+                                                          value * COEFF_PART * COEFF_SCALE / 50.0 / ui->openGLWidget->probe->maxVertexValue);
+        ui->openGLWidget->update();
+    }
 }
 
 void MainWindow::on_save_screenshot_clicked() {
@@ -333,12 +347,6 @@ void MainWindow::on_save_screenshot_clicked() {
 }
 
 
-void MainWindow::on_reset_clicked() {
-    default_val();
-    ui->openGLWidget->update();
-}
-
-
 void MainWindow::on_save_gif_clicked() {
     saveSettings();
     ui->save_gif->setEnabled(false);
@@ -354,10 +362,11 @@ void MainWindow::slotTimer() {
         QString currentDateTime = dateTime.toString("dd.MM.yy_HH.mm.ss");
         QString fileName = QFileDialog::getSaveFileName(
             this, "Сохранение GIF", "GIF_" + currentDateTime, "GIF (*.gif)");
-
+        *gifImage = ui->openGLWidget->grabFramebuffer();
+        *gifImage = gifImage->scaled(640,480);
         gif = new QGifImage;
         for (int i = 0; i < gifTime; ++i) {
-            gif->addFrame(gifImage[i], 0);
+            gif->addFrame(gifImage[i], 100);
         }
         gif->save(fileName);
         ui->save_gif->setEnabled(true);

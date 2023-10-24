@@ -63,6 +63,10 @@ int parseOBJFile(const char* filename, OBJData** objData) {
         else
             (*objData)->faces[(*objData)->faceCount - 1].number_vertex = realloc((*objData)->faces[(*objData)->faceCount - 1].number_vertex, (*objData)->faces[(*objData)->faceCount - 1].count_number_vertex * sizeof(int));
         (*objData)->faces[(*objData)->faceCount - 1].number_vertex[i++] = number;
+        if (data[0] == '/')
+//            printf("**** %c\n", data);
+            while (data[0] != ' ')
+                data++;
       }
 
       // Обновление максимального значения
