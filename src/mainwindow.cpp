@@ -251,7 +251,7 @@ void MainWindow::on_rotate_y_valueChanged(int value) {
 
 void MainWindow::on_rotate_z_valueChanged(int value) {
     if (ui->openGLWidget->probe != NULL) {
-        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
                                                           ui->rotate_y->value() * COEFF_ROTATE,
                                                           value * COEFF_ROTATE,
                                                           (ui->translate_x->value() - 50) * COEFF_SHIFT,
@@ -264,7 +264,7 @@ void MainWindow::on_rotate_z_valueChanged(int value) {
 
 void MainWindow::on_translate_x_valueChanged(int value) {
     if (ui->openGLWidget->probe != NULL) {
-        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
                                                           ui->rotate_y->value() * COEFF_ROTATE,
                                                           ui->rotate_z->value() * COEFF_ROTATE,
                                                           (value - 50) * COEFF_SHIFT,
@@ -277,7 +277,7 @@ void MainWindow::on_translate_x_valueChanged(int value) {
 
 void MainWindow::on_translate_y_valueChanged(int value) {
     if (ui->openGLWidget->probe != NULL) {
-        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
                                                           ui->rotate_y->value() * COEFF_ROTATE,
                                                           ui->rotate_z->value() * COEFF_ROTATE,
                                                           (ui->translate_x->value() - 50) * COEFF_SHIFT,
@@ -290,7 +290,7 @@ void MainWindow::on_translate_y_valueChanged(int value) {
 
 void MainWindow::on_translate_z_valueChanged(int value) {
     if (ui->openGLWidget->probe != NULL) {
-        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_y->value() * COEFF_ROTATE,
+        ui->openGLWidget->matrix_alt = matrix_alteration (ui->rotate_x->value() * COEFF_ROTATE,
                                                           ui->rotate_y->value() * COEFF_ROTATE,
                                                           ui->rotate_z->value() * COEFF_ROTATE,
                                                           (ui->translate_x->value() - 50) * COEFF_SHIFT,
