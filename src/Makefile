@@ -4,9 +4,16 @@ CHECKFL = $(shell pkg-config --cflags --libs check)
 SRC = $(PROJECT_NAME)_parser.c $(PROJECT_NAME)_matrix.c
 OS = $(shell uname)
 ifeq ($(OS), Linux)
-OPEN_CMD = xdg-open
+OPEN_CMD = google-chrome
 else
 OPEN_CMD = open
+endif
+
+ifeq ($(OS), Linux)
+LEAK_CHECK = valgrind --leak-check=full -s -q --track-origins=yes ./s21_test
+endif
+ifeq ($(OS), Darwin)
+LEAK_CHECK = leaks -atExit -- ./s21_test
 endif
 
 all: $(PROJECT_NAME).a
@@ -26,7 +33,7 @@ $(PROJECT_NAME).a: clean
 	ranlib $(PROJECT_NAME).a
 
 
-test: $(PROJECT_NAME).a
+tests: $(PROJECT_NAME).a
 	checkmk $(PROJECT_NAME).check > $(PROJECT_NAME)_test.c
 	gcc $(FLAGS) $(SRC) $(PROJECT_NAME)_test.c $(PROJECT_NAME).a -o s21_test $(CHECKFL)
 	./s21_test
@@ -52,11 +59,14 @@ dist: clean
 	tar -zcf s21_smartcalc.tgz ./*
 	
 clean:
-	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz html latex ../build*
-#	cd docs; rm -rf html latex
+	rm -rf *.o *.a *.out s21_test $(PROJECT_NAME)_test.c *.gcda *.gcno report *.info *.gz *.tgz html latex ../build
+	cd docs; rm -rf html latex
 
 format: 
 	clang-format -style=Google -i *.c *.h *.cpp 
 
 style: 
 	clang-format -style=Google -n *.c *.h *.cpp 
+
+leaks: clean test
+	$(LEAK_CHECK)

@@ -356,17 +356,17 @@ void MainWindow::on_save_gif_clicked() {
 void MainWindow::slotTimer() {
     if (gifTime < 50) {
         gifImage[gifTime] = ui->openGLWidget->grab().toImage();
-         ++gifTime;
+        gifImage[gifTime] = gifImage[gifTime].scaled(640, 480);
+        ++gifTime;
     } else {
         QDateTime dateTime = dateTime.currentDateTime();
         QString currentDateTime = dateTime.toString("dd.MM.yy_HH.mm.ss");
         QString fileName = QFileDialog::getSaveFileName(
             this, "Сохранение GIF", "GIF_" + currentDateTime, "GIF (*.gif)");
-        *gifImage = ui->openGLWidget->grabFramebuffer();
-        *gifImage = gifImage->scaled(640,480);
         gif = new QGifImage;
         for (int i = 0; i < gifTime; ++i) {
-            gif->addFrame(gifImage[i], 100);
+            QImage scaledImage = gifImage[i].scaled(640, 480);
+            gif->addFrame(scaledImage, 100);
         }
         gif->save(fileName);
         ui->save_gif->setEnabled(true);
@@ -375,3 +375,26 @@ void MainWindow::slotTimer() {
         gifTime = 0;
     }
 }
+
+//void MainWindow::slotTimer() {
+//    if (gifTime < 50) {
+//        gifImage[gifTime] = ui->openGLWidget->grab().toImage();
+//         ++gifTime;
+//    } else {
+//        QDateTime dateTime = dateTime.currentDateTime();
+//        QString currentDateTime = dateTime.toString("dd.MM.yy_HH.mm.ss");
+//        QString fileName = QFileDialog::getSaveFileName(
+//            this, "Сохранение GIF", "GIF_" + currentDateTime, "GIF (*.gif)");
+//        *gifImage = ui->openGLWidget->grabFramebuffer();
+//        *gifImage = gifImage->scaled(640,480);
+//        gif = new QGifImage;
+//        for (int i = 0; i < gifTime; ++i) {
+//            gif->addFrame(gifImage[i], 100);
+//        }
+//        gif->save(fileName);
+//        ui->save_gif->setEnabled(true);
+//        timer->stop();
+//        delete gif;
+//        gifTime = 0;
+//    }
+//}

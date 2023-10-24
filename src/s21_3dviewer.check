@@ -6,15 +6,15 @@
     OBJData *a;
     int flag = parseOBJFile("j.obj", &a);
     ck_assert_int_eq(flag, EXIT_FAILURE);
-
+    
 #test correct_input
     OBJData *a;
     int flag = parseOBJFile("objects/teddy.obj", &a);
-    ck_assert_int_eq(flag, EXIT_SUCCESS);   
+    ck_assert_int_eq(flag, EXIT_SUCCESS);
+    freeOBJData(a);   
 
 #test normal
   OBJData *a;
-  
   float vertices_arr[] = {
       0.0000000, 0.0000000, 0.0000000,
       0.0000000, 0.0000000, 2.0000000,
@@ -35,130 +35,106 @@
     ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
     i++;
   }
-
+  
   freeOBJData(a);
 
-#test affine_rotate_X_1
-  OBJData *a;
+#test s21_create_matrix_1
+  matrix_t A = s21_create_matrix(5, 7);
+  matrix_t B = s21_create_matrix(7, 5);
+  matrix_t C = s21_create_matrix(5, 7);
+  matrix_t D = s21_create_matrix(-5, 7);
+  matrix_t E = s21_create_matrix(1, 1);
   
-  float vertices_arr[] = {
-      0.0000000, 0.0000000, 0.0000000,  0.0000000, 1.0000000, 1.7320508,
-      0.0000000, 1.7320508, -1.0000000, 0.0000000, 2.7320508, 0.7320508,
-      2.0000000, 0.0000000, 0.0000000,  2.0000000, 1.0000000, 1.7320508,
-      2.0000000, 1.7320508, -1.0000000, 2.0000000, 2.7320508, 0.7320508};
-  parseOBJFile("objects/cube.obj", &a);
-  return_x(a, 30);
+  ck_assert_int_eq(D.matrix_type, INCORRECT_MATRIX);
+    
+  A.matrix[2][2] = 8.000005;
+  ck_assert_int_eq(s21_eq_matrix(&A, &C), EXIT_FAILURE);
+  ck_assert_int_eq(s21_eq_matrix(&E, &E), EXIT_SUCCESS);
+
+  s21_remove_matrix(&A);
+  s21_remove_matrix(&B);
+  s21_remove_matrix(&C);
+  s21_remove_matrix(&D);
+  s21_remove_matrix(&E);
+
+  ck_assert_int_eq(A.matrix_type, INCORRECT_MATRIX);
+  ck_assert_ptr_eq(A.matrix, NULL);
+  ck_assert_int_eq(B.matrix_type, INCORRECT_MATRIX);
+  ck_assert_int_eq(C.matrix_type, INCORRECT_MATRIX);
+  ck_assert_int_eq(D.matrix_type, INCORRECT_MATRIX);
+
+#test s21_mult_matrix_1
+
+  matrix_t A = s21_create_matrix(4, 3);
+  matrix_t B = s21_create_matrix(3, 4);
+  matrix_t C = s21_create_matrix(2, 4);
+  fill_matrix(&A);
+  fill_matrix(&B);
+  double arrC[] = {1, 2, -1, -2, 3, -3, 4, -4};
+  matrix_fill_array(&C, arrC);
+
+  matrix_t AB = s21_mult_matrix(&A, &B);
+  matrix_t AC = s21_mult_matrix(&A, &C);
+  matrix_t CA = s21_mult_matrix(&C, &A);
+  matrix_t CB = s21_mult_matrix(&C, &B);
+
+  ck_assert_int_eq(AC.matrix_type, INCORRECT_MATRIX);
+  ck_assert_int_eq(CB.matrix_type, INCORRECT_MATRIX);
+
+  matrix_t AB_res = s21_create_matrix(4, 4);
+  matrix_t CA_res = s21_create_matrix(2, 3);
+
+  double arrAB_res[] = {20, 23,  26,  29,  56,  68,  80,  92,
+                        92, 113, 134, 155, 128, 158, 188, 218};
+  matrix_fill_array(&AB_res, arrAB_res);
+  double arrCA_res[] = {-18, -18, -18, -21, -21, -21};
+  matrix_fill_array(&CA_res, arrCA_res);
+
+  ck_assert_int_eq(s21_eq_matrix(&AB, &AB_res), EXIT_SUCCESS);
+  ck_assert_int_eq(s21_eq_matrix(&CA, &CA_res), EXIT_SUCCESS);
+
+  s21_remove_matrix(&A);
+  s21_remove_matrix(&B);
+  s21_remove_matrix(&C);
+
+  s21_remove_matrix(&AB_res);
+  s21_remove_matrix(&CA_res);
+
+  s21_remove_matrix(&AB);
+  s21_remove_matrix(&AC);
+  s21_remove_matrix(&CA);
+  s21_remove_matrix(&CB);
+
+#test rotate_shift_scale
   
-  ck_assert_int_eq(a->vertexCount, 8);
+  float ax = 45.0; // Угол вращения по X
+  float ay = 30.0; // Угол вращения по Y
+  float az = 60.0; // Угол вращения по Z
+  float da = 1.0;  // Смещение по X
+  float db = 2.0;  // Смещение по Y
+  float dc = 3.0;  // Смещение по Z
+  float ka = 1.5;  // Масштабирование
 
-  int i = 0;
-  while (i < (int)a->vertexCount * 3) {
-    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
-    i++;
-  }
-  freeOBJData(a);
+  matrix_t result = matrix_alteration(ax, ay, az, da, db, dc, ka);
 
+  matrix_t rotate = rotating(ax, ay, az);
+  matrix_t shift = shifting(da, db, dc);
+  matrix_t scale = scaling(ka);
 
-#test affine_rotate_X_2
-  OBJData *a;
-  
-  float vertices_arr[] = {
-      0.0000000, 0.0000000, 0.0000000, 0.0000000, -1.0000000, 1.7320508,
-      0.0000000, 1.7320508, 1.0000000, 0.0000000, 0.7320508,  2.7320508,
-      2.0000000, 0.0000000, 0.0000000, 2.0000000, -1.0000000, 1.7320508,
-      2.0000000, 1.7320508, 1.0000000, 2.0000000, 0.7320508,  2.7320508};
-  parseOBJFile("objects/cube.obj", &a);
-  return_x(a, -30);
-  
-  ck_assert_int_eq(a->vertexCount, 8);
-  int i = 0;
-  while (i < (int)a->vertexCount * 3) {
-    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
-    i++;
-  }
-  freeOBJData(a);
+  matrix_t rs = s21_mult_matrix(&rotate, &shift);
 
+  matrix_t expected_rs = s21_mult_matrix(&rotate, &shift);
+  matrix_t expected_result = s21_mult_matrix(&expected_rs, &scale);
 
+  ck_assert_int_eq(s21_eq_matrix(&result, &expected_result), EXIT_SUCCESS);
+
+  s21_remove_matrix(&rotate);
+  s21_remove_matrix(&shift);
+  s21_remove_matrix(&scale);
+  s21_remove_matrix(&rs);
+  s21_remove_matrix(&result);
+  s21_remove_matrix(&expected_rs);
+  s21_remove_matrix(&expected_result);
 
 
-#test affine_rotate_Y_1
-  OBJData *a;
-  
-  float vertices_arr[] = {
-      0.0000000, 0.0000000, 0.0000000,  1.0000000, 0.0000000, 1.7320508,
-      0.0000000, 2.0000000, 0.0000000,  1.0000000, 2.0000000, 1.7320508,
-      1.7320508, 0.0000000, -1.0000000, 2.7320508, 0.0000000, 0.7320508,
-      1.7320508, 2.0000000, -1.0000000, 2.7320508, 2.0000000, 0.7320508};
-  parseOBJFile("objects/cube.obj", &a);
-  return_y(a, 30);
- 
-  ck_assert_int_eq(a->vertexCount, 8);
-
-  int i = 0;
-  while (i < (int)a->vertexCount * 3) {
-    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
-    i++;
-  }
-  freeOBJData(a);
-
-#test affine_rotate_Y_2
-  OBJData *a;
-  
-  float vertices_arr[] = {
-      0.0000000, 0.0000000, 0.0000000, -1.0000000, 0.0000000, 1.7320508,
-      0.0000000, 2.0000000, 0.0000000, -1.0000000, 2.0000000, 1.7320508,
-      1.7320508, 0.0000000, 1.0000000, 0.7320508,  0.0000000, 2.7320508,
-      1.7320508, 2.0000000, 1.0000000, 0.7320508,  2.0000000, 2.7320508};
-  parseOBJFile("objects/cube.obj", &a);
-  return_y(a, -30);
- 
-  ck_assert_int_eq(a->vertexCount, 8);
-
-  int i = 0;
-  while (i < (int)a->vertexCount * 3) {
-    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
-    i++;
-  }
-  freeOBJData(a);
-
-
-#test affine_rotate_Z_1
-  OBJData *a;
-  
-  float vertices_arr[] = {
-      0.0000000, 0.0000000,  0.0000000, 0.0000000, 0.0000000,  2.0000000,
-      1.0000000, 1.7320508,  0.0000000, 1.0000000, 1.7320508,  2.0000000,
-      1.7320508, -1.0000000, 0.0000000, 1.7320508, -1.0000000, 2.0000000,
-      2.7320508, 0.7320508,  0.0000000, 2.7320508, 0.7320508,  2.0000000};
-  parseOBJFile("objects/cube.obj", &a);
-  return_z(a, 30);
-  
-  ck_assert_int_eq(a->vertexCount, 8);
-
-  int i = 0;
-  while (i < (int)a->vertexCount * 3) {
-    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
-    i++;
-  }
-  freeOBJData(a);
-
-#test affine_rotate_Z_2
-  OBJData *a;
-  
-  float vertices_arr[] = {
-      0.0000000,  0.0000000, 0.0000000, 0.0000000,  0.0000000, 2.0000000,
-      -1.0000000, 1.7320508, 0.0000000, -1.0000000, 1.7320508, 2.0000000,
-      1.7320508,  1.0000000, 0.0000000, 1.7320508,  1.0000000, 2.0000000,
-      0.7320508,  2.7320508, 0.0000000, 0.7320508,  2.7320508, 2.0000000};
-  parseOBJFile("objects/cube.obj", &a);
-  return_z(a, -30);
-  
-  ck_assert_int_eq(a->vertexCount, 8);
-
-  int i = 0;
-  while (i < (int)a->vertexCount* 3) {
-    ck_assert_float_eq_tol(a->vertices[i], vertices_arr[i], EPS);
-    i++;
-  }
-  freeOBJData(a);
 
