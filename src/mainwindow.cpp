@@ -14,9 +14,20 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
-  this->settingFile = QApplication::applicationDirPath() + "/../../../settings.conf";
+//  this->settingFile = QApplication::applicationDirPath() + "/../../../settings.conf";
+
+  if (QSysInfo::productType() == "windows") {
+      // Настройте путь для Windows
+      settingFile = QCoreApplication::applicationDirPath() + "/settings.conf";
+  } else if (QSysInfo::productType() == "osx") {
+      // Настройте путь для MacOS                       // В маках обычно все файлы с конфигурвциями хранятся в одном месте.
+      settingFile = QDir::homePath() + "/Library/Application Support/YourAppName/settings.conf";
+  } else {
+      // По умолчанию, используем путь для Linux
+      settingFile = QCoreApplication::applicationDirPath() + "/settings.conf";
+  }
   printf("settings file: %s\n", settingFile.toStdString().c_str());
-  default_val();
+
   char rgba_color[40];
   sprintf(rgba_color, "background-color: rgb(%d,%d,%d)", (int)(ui->openGLWidget->b_red * 255),
           (int)(ui->openGLWidget->b_green*255), (int)(ui->openGLWidget->b_blue*255));
@@ -27,6 +38,12 @@ MainWindow::MainWindow(QWidget *parent)
   timer = new QTimer;
   gifImage = new QImage[50]{};
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
+
+  default_val();
+
+    qDebug() << QSysInfo::productType(); // Выводит в терминал название операционной системы.
+                                         // Посмотрите что у вас и впишите в проверку. У мены выводит "ubuntu".
+                                        // Для винды и линукса пути одинаковые, можно убрать, а можно прописать свой.
 }
 
 MainWindow::~MainWindow() {
@@ -87,6 +104,8 @@ void MainWindow::default_val() {
         ui->openGLWidget->b_red = settings.value("b_red").value<double>();
         ui->openGLWidget->b_green = settings.value("b_green").value<double>();
         ui->openGLWidget->b_blue = settings.value("b_blue").value<double>();
+        ui->check_color_back->setPalette(
+            QPalette(settings.value("color").value<QColor>()));
      }
     settings.endGroup();
   } else
