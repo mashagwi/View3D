@@ -127,7 +127,9 @@ class MainWindow : public QMainWindow {
 
   void on_f_no_clicked();
 
- private:
+  void on_MainWindow_destroyed();
+
+private:
   Ui::MainWindow *ui;
 
   QString settingFile;

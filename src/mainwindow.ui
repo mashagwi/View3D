@@ -14,599 +14,479 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>98</y>
-      <width>311</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Открыть файл</string>
-    </property>
-   </widget>
-   <widget class="View" name="openGLWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>700</width>
-      <height>700</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>700</width>
-      <height>700</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>700</width>
-      <height>700</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>148</y>
-      <width>111</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Проекция</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>880</x>
-      <y>198</y>
-      <width>110</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Расположение</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>890</x>
-      <y>348</y>
-      <width>77</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Вращение</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>488</y>
-      <width>67</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Масштаб</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>378</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>X</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>418</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Y</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>458</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Z</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_12">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>228</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>X</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>308</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Z</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_14">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>268</y>
-      <width>21</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Y</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>518</y>
-      <width>301</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="scale_min">
-       <property name="text">
-        <string>-</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="scale_value">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>100</number>
-       </property>
-       <property name="value">
-        <number>50</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="scale_max">
-       <property name="text">
-        <string>+</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>750</x>
-      <y>588</y>
-      <width>321</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>1</number>
-    </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Вершины</string>
-     </attribute>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>90</width>
-        <height>16</height>
-       </rect>
-      </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="8" column="2" rowspan="3" colspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QSlider" name="rotate_x">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="rotate_y">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="rotate_z">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="14" column="1" colspan="3">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="save_screenshot">
+        <property name="text">
+         <string>Сохранить в формате</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="format">
+        <item>
+         <property name="text">
+          <string>BMP</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JPEG</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="save_gif">
+        <property name="text">
+         <string>Сохранить GIF</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLabel" name="label_13">
       <property name="text">
-       <string>Тип вершин</string>
+       <string>Z</string>
       </property>
      </widget>
-     <widget class="QRadioButton" name="v_square">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>30</y>
-        <width>99</width>
-        <height>20</height>
-       </rect>
+    </item>
+    <item row="0" column="0" rowspan="14">
+     <widget class="View" name="openGLWidget">
+      <property name="minimumSize">
+       <size>
+        <width>700</width>
+        <height>700</height>
+       </size>
       </property>
-      <property name="text">
-       <string>Квадраты</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="v_no">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>50</y>
-        <width>99</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>нет</string>
+      <property name="maximumSize">
+       <size>
+        <width>700</width>
+        <height>700</height>
+       </size>
       </property>
      </widget>
-     <widget class="QRadioButton" name="v_circle">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>10</y>
-        <width>99</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Круги</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_6">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>80</y>
-        <width>58</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Размер</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="check_color_vert">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>10</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Цвет</string>
-      </property>
-     </widget>
-     <widget class="QScrollBar" name="hsbWidth">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>80</y>
-        <width>160</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="minimum">
+    </item>
+    <item row="13" column="1" colspan="3">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
        <number>1</number>
       </property>
-      <property name="maximum">
-       <number>100</number>
-      </property>
-      <property name="value">
-       <number>10</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Линиии</string>
-     </attribute>
-     <widget class="QRadioButton" name="f_solid">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>10</y>
-        <width>99</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Сплошная</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="f_dashed">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>30</y>
-        <width>106</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Пунктирная</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_8">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>75</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Тип линии</string>
-      </property>
-     </widget>
-     <widget class="QScrollBar" name="thickness">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>80</y>
-        <width>160</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_15">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>80</y>
-        <width>71</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Толщина</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="check_color_face">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>10</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Цвет</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="f_no">
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>50</y>
-        <width>99</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>нет</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="widget">
-     <attribute name="title">
-      <string>Фон</string>
-     </attribute>
-     <widget class="QPushButton" name="check_color_back">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>20</y>
-        <width>51</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Цвет</string>
-      </property>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>228</y>
-      <width>291</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QSlider" name="translate_x">
-       <property name="value">
-        <number>50</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Вершины</string>
+       </attribute>
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>90</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Тип вершин</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="v_square">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>30</y>
+          <width>99</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Квадраты</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="v_no">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>50</y>
+          <width>99</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>нет</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="v_circle">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>10</y>
+          <width>99</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Круги</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>58</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Размер</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="check_color_vert">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>10</y>
+          <width>51</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Цвет</string>
+        </property>
+       </widget>
+       <widget class="QScrollBar" name="hsbWidth">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>80</y>
+          <width>160</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>10</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
       </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="translate_y">
-       <property name="value">
-        <number>50</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Линиии</string>
+       </attribute>
+       <widget class="QRadioButton" name="f_solid">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>10</y>
+          <width>99</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Сплошная</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="f_dashed">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>30</y>
+          <width>106</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Пунктирная</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_8">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>75</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Тип линии</string>
+        </property>
+       </widget>
+       <widget class="QScrollBar" name="thickness">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>80</y>
+          <width>160</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_15">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>80</y>
+          <width>71</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Толщина</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="check_color_face">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>10</y>
+          <width>51</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Цвет</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="f_no">
+        <property name="geometry">
+         <rect>
+          <x>110</x>
+          <y>50</y>
+          <width>99</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>нет</string>
+        </property>
+       </widget>
       </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="translate_z">
-       <property name="value">
-        <number>50</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
+      <widget class="QWidget" name="widget">
+       <attribute name="title">
+        <string>Фон</string>
+       </attribute>
+       <widget class="QPushButton" name="check_color_back">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>20</y>
+          <width>51</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Цвет</string>
+        </property>
+       </widget>
       </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>378</y>
-      <width>291</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QSlider" name="rotate_x">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="rotate_y">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSlider" name="rotate_z">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QComboBox" name="projection">
-    <property name="geometry">
-     <rect>
-      <x>930</x>
-      <y>148</y>
-      <width>130</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Параллельная</string>
-     </property>
+     </widget>
     </item>
-    <item>
-     <property name="text">
-      <string> Центральная</string>
-     </property>
+    <item row="10" column="1">
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>Z</string>
+      </property>
+     </widget>
     </item>
-   </widget>
-   <widget class="QLabel" name="info">
-    <property name="geometry">
-     <rect>
-      <x>780</x>
-      <y>11</y>
-      <width>381</width>
-      <height>81</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Название файла: File not open  
+    <item row="4" column="2" rowspan="3" colspan="2">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QSlider" name="translate_x">
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="translate_y">
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="translate_z">
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="12" column="2" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="scale_min">
+        <property name="text">
+         <string>-</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="scale_value">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>50</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="scale_max">
+        <property name="text">
+         <string>+</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="3">
+     <widget class="QComboBox" name="projection">
+      <item>
+       <property name="text">
+        <string>Параллельная</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string> Центральная</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="3" column="2" colspan="2">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Расположение</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>X</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="3">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Открыть файл</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="3">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Вращение</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>X</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2" colspan="2">
+     <widget class="QLabel" name="info">
+      <property name="text">
+       <string>Название файла: File not open  
 
 Количество вершин: 0 
 Количество линий: 0</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>750</x>
-      <y>740</y>
-      <width>264</width>
-      <height>72</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="save_screenshot">
-       <property name="text">
-        <string>Сохранить в формате</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="format">
-       <item>
-        <property name="text">
-         <string>BMP</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>JPEG</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="save_gif">
-       <property name="text">
-        <string>Сохранить GIF</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Проекция</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string>Y</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="3">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Масштаб</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLabel" name="label_14">
+      <property name="text">
+       <string>Y</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

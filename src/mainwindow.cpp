@@ -14,12 +14,19 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
+  this->settingFile = QApplication::applicationDirPath() + "/../../../settings.conf";
+  printf("settings file: %s\n", settingFile.toStdString().c_str());
+  default_val();
+  char rgba_color[40];
+  sprintf(rgba_color, "background-color: rgb(%d,%d,%d)", (int)(ui->openGLWidget->b_red * 255),
+          (int)(ui->openGLWidget->b_green*255), (int)(ui->openGLWidget->b_blue*255));
+  printf("background-color: rgb(%d,%d,%d)", (int)ui->openGLWidget->b_red,
+         (int)ui->openGLWidget->b_green, (int)ui->openGLWidget->b_blue);
+  ui->check_color_back->setStyleSheet(rgba_color);
+
   timer = new QTimer;
   gifImage = new QImage[50]{};
   connect(timer, SIGNAL(timeout()), this, SLOT(slotTimer()));
-  this->settingFile = QApplication::applicationDirPath() + "/settings.conf";
-
-  default_val();
 }
 
 MainWindow::~MainWindow() {
@@ -31,7 +38,24 @@ MainWindow::~MainWindow() {
 
 void MainWindow::default_val() {
   if (QFile::exists(settingFile)) {
+      printf("find\n");
     QSettings settings(settingFile, QSettings::IniFormat);
+    settings.beginGroup("Translate");
+    ui->translate_x->setValue(settings.value("x").value<int>());
+    ui->translate_y->setValue(settings.value("y").value<int>());
+    ui->translate_z->setValue(settings.value("z").value<int>());
+    settings.endGroup();
+
+    settings.beginGroup("Rotate");
+    ui->rotate_x->setValue(settings.value("x").value<int>());
+    ui->rotate_y->setValue(settings.value("y").value<int>());
+    ui->rotate_z->setValue(settings.value("z").value<int>());
+    settings.endGroup();
+
+    settings.beginGroup("Scale");
+    ui->scale_value->setValue(settings.value("s").value<int>());
+    settings.endGroup();
+
     settings.beginGroup("LineSet");
     if (settings.value("solid").toBool()) {
       ui->f_solid->setChecked(true);
@@ -60,15 +84,33 @@ void MainWindow::default_val() {
 
     settings.beginGroup("background");
     if (settings.value("color").toString().length() > 0) {
-      ui->check_color_back->setPalette(
-          QPalette(settings.value("color").value<QColor>()));
-    }
+        ui->openGLWidget->b_red = settings.value("b_red").value<double>();
+        ui->openGLWidget->b_green = settings.value("b_green").value<double>();
+        ui->openGLWidget->b_blue = settings.value("b_blue").value<double>();
+     }
     settings.endGroup();
-  }
+  } else
+      printf("no find");
 }
 
 void MainWindow::saveSettings() {
   QSettings settings(settingFile, QSettings::IniFormat);
+
+  settings.beginGroup("Translate");
+  settings.setValue("x", ui->translate_x->value());
+  settings.setValue("y", ui->translate_y->value());
+  settings.setValue("z", ui->translate_z->value());
+  settings.endGroup();
+
+  settings.beginGroup("Rotate");
+  settings.setValue("x", ui->rotate_x->value());
+  settings.setValue("y", ui->rotate_y->value());
+  settings.setValue("z", ui->rotate_z->value());
+  settings.endGroup();
+
+  settings.beginGroup("Scale");
+  settings.setValue("s", ui->scale_value->value());
+  settings.endGroup();
 
   settings.beginGroup("LineSet");
   settings.setValue("solid", ui->f_solid->isChecked());
@@ -88,14 +130,17 @@ void MainWindow::saveSettings() {
   settings.endGroup();
 
   settings.beginGroup("background");
-  settings.setValue("color",
-                    ui->check_color_back->palette().color(QPalette::Button));
+  settings.setValue("b_red", ui->openGLWidget->b_red);
+  settings.setValue("b_green", ui->openGLWidget->b_green);
+  settings.setValue("b_blue", ui->openGLWidget->b_blue);
   settings.endGroup();
+
+  printf("settings file: %s\n", settingFile.toStdString().c_str());
 }
 
 void MainWindow::on_pushButton_clicked() {
   QString str;
-  str = QFileDialog::getOpenFileName(this, "Выбрать файл", "../src/objects",
+  str = QFileDialog::getOpenFileName(this, "Выбрать файл", QApplication::applicationDirPath() + "/../../../objects",
                                      "*.obj");
   std::string expression = str.toStdString();
   char *file = expression.data();
@@ -106,7 +151,7 @@ void MainWindow::on_pushButton_clicked() {
            (*(ui->openGLWidget->probe)).faceCount);
 
   ui->openGLWidget->matrix_alt =
-      matrix_alteration(ui->rotate_y->value() * COEFF_ROTATE,
+      matrix_alteration(ui->rotate_x->value() * COEFF_ROTATE,
                         ui->rotate_y->value() * COEFF_ROTATE,
                         ui->rotate_z->value() * COEFF_ROTATE,
                         (ui->translate_x->value() - 50) * COEFF_SHIFT,
@@ -329,7 +374,6 @@ void MainWindow::on_scale_value_valueChanged(int value) {
 }
 
 void MainWindow::on_save_screenshot_clicked() {
-  saveSettings();
   QString format, fileName;
   int type = ui->format->currentIndex();
   if (type == 0) {
@@ -381,3 +425,9 @@ void MainWindow::slotTimer() {
     gifTime = 0;
   }
 }
+
+void MainWindow::on_MainWindow_destroyed()
+{
+    saveSettings();
+}
+
