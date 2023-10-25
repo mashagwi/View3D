@@ -70,9 +70,8 @@ int parseOBJFile(const char* filename, OBJData** objData) {
                   sizeof(int));
         (*objData)->faces[(*objData)->faceCount - 1].number_vertex[i++] =
             number;
-        if (data[0] == '/')
-          //            printf("**** %c\n", data);
-          while (data[0] != ' ') data++;
+        if (*data == '/')
+          while (*data != ' ' && *data != '\0') data++;
       }
 
       // Обновление максимального значения

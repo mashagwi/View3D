@@ -24,7 +24,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
 
     enum vert_type { NO, CIRCLE, SQUARE };
-    enum face_type { SOLID, DASHED };
+    enum face_type { SOLID, DASHED, NONE };
     enum project_type { PARALLEL, CENTRAL };
 
     ~MainWindow();
@@ -123,6 +123,8 @@ private slots:
 
     /// @brief Создает анимацию GIF и сохраняет её.
     void slotTimer();
+
+    void on_f_no_clicked();
 
 private:
     Ui::MainWindow *ui;

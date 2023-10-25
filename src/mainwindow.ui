@@ -234,7 +234,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -423,6 +423,19 @@
        <string>Цвет</string>
       </property>
      </widget>
+     <widget class="QRadioButton" name="f_no">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>50</y>
+        <width>99</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>нет</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="widget">
      <attribute name="title">
@@ -554,13 +567,13 @@
 Количество линий: 0</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>750</x>
       <y>740</y>
-      <width>234</width>
-      <height>58</height>
+      <width>264</width>
+      <height>72</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -601,7 +614,7 @@
      <x>0</x>
      <y>0</y>
      <width>1130</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

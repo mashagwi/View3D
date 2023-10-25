@@ -61,8 +61,6 @@ void s21_remove_matrix(matrix_t* A);
 /// @brief Умножение двух матриц A и B.
 matrix_t s21_mult_matrix(matrix_t* A, matrix_t* B);
 
-int s21_correct_matrix(matrix_t* A);
-
 /// @brief Проверка равенства двух матриц A и B.
 int s21_eq_matrix(matrix_t* A, matrix_t* B);
 
@@ -89,10 +87,24 @@ matrix_t scaling(float a);
 matrix_t matrix_alteration(float ax, float ay, float az, float da, float db,
                            float dc, float ka);
 
+/// @brief Сравнивает две матрицы A и B на равенство.
+/// @param A Указатель на первую матрицу.
+/// @param B Указатель на вторую матрицу.
+/// @return 0, если матрицы не равны; 1, если матрицы равны.
 int s21_eq_matrix(matrix_t* A, matrix_t* B);
 
+/// @brief Заполняет матрицу A случайными данными.
+/// @param A Указатель на матрицу, которую необходимо заполнить.
 void fill_matrix(matrix_t* A);
 
+/// @brief Заполняет матрицу A данными из массива arr.
+/// @param A Указатель на матрицу, которую необходимо заполнить.
+/// @param arr Указатель на массив данных для заполнения матрицы.
 void matrix_fill_array(matrix_t* A, const double* arr);
+
+/// @brief Проверяет корректность матрицы A.
+/// @param A Указатель на матрицу, которую необходимо проверить.
+/// @return 1, если матрица корректна; 0, если матрица содержит ошибки или не корректна.
+int s21_correct_matrix(matrix_t* A);
 
 #endif  // S21_3D_VIEWER_PARSER_H

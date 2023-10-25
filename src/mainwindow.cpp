@@ -162,6 +162,12 @@ void MainWindow::on_f_dashed_clicked() {
   ui->openGLWidget->update();
 }
 
+void MainWindow::on_f_no_clicked()
+{
+    ui->openGLWidget->face_type = NONE;
+    ui->openGLWidget->update();
+}
+
 void MainWindow::on_check_color_back_clicked() {
   QColor b_color =
       QColorDialog::getColor(Qt::white, this->ui->tabWidget, "Выбор цвета");
@@ -209,7 +215,7 @@ void MainWindow::on_check_color_vert_clicked()
 }
 
 void MainWindow::on_thickness_valueChanged(int value) {
-  ui->openGLWidget->face_thickness = value / 10;
+  ui->openGLWidget->lines_width = value / 10;
   ui->openGLWidget->update();
 }
 
@@ -398,3 +404,6 @@ void MainWindow::slotTimer() {
 //        gifTime = 0;
 //    }
 //}
+
+
+

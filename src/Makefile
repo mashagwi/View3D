@@ -51,9 +51,6 @@ gcov_report:
 	
 dvi:
 	cd docs/ && doxygen Doxyfile && open html/index.html & cd ..
-#doxygen doxygen/Doxyfile
-#@mv html doxygen
-#open doxygen/html/index.html
 
 dist: clean
 	tar -zcf s21_smartcalc.tgz ./*
@@ -68,5 +65,5 @@ format:
 style: 
 	clang-format -style=Google -n *.c *.h *.cpp 
 
-leaks: clean test
+leaks: clean tests
 	$(LEAK_CHECK)
