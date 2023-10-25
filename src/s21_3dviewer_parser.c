@@ -22,10 +22,8 @@ int parseOBJFile(const char* filename, OBJData** objData) {
   char* line = calloc(256, sizeof(char));
   while (fgets(line, 256, file) != NULL) {
     if (line[0] == '#') {
-      // Это комментарий, пропустить строку
       continue;
     } else if (line[0] == 'v' && line[1] == ' ') {
-      // Обработка вершин (v)
       (*objData)->vertexCount++;
       if ((*objData)->vertexCount == 1) {
         (*objData)->vertices = calloc(1, sizeof(float) * 3);
@@ -38,13 +36,11 @@ int parseOBJFile(const char* filename, OBJData** objData) {
       (*objData)->vertices[((*objData)->vertexCount - 1) * 3 + 1] = y;
       (*objData)->vertices[((*objData)->vertexCount - 1) * 3 + 2] = z;
 
-      // Обновление максимальных значений
       float maxCoord = x > y ? (x > z ? x : z) : (y > z ? y : z);
       if (maxCoord > (*objData)->maxVertexValue) {
         (*objData)->maxVertexValue = maxCoord;
       }
     } else if (line[0] == 'f' && line[1] == ' ') {
-      // Обработка граней (f)
       (*objData)->faceCount++;
       if ((*objData)->faceCount == 1) {
         (*objData)->faces = calloc(1, sizeof(face));
@@ -73,17 +69,10 @@ int parseOBJFile(const char* filename, OBJData** objData) {
         if (*data == '/')
           while (*data != ' ' && *data != '\0') data++;
       }
-
-      // Обновление максимального значения
-      // int maxIndex = v1 > v2 ? (v1 > v3 ? v1 : v3) : (v2 > v3 ? v2 : v3);
-      //      if (maxIndex > (*objData)->maxFaceValue)
-      //        (*objData)->maxFaceValue = maxIndex;
     }
   }
   free(line);
   fclose(file);
-  // remove_array(objData);
-  // free(objData);
   return EXIT_SUCCESS;
 }
 

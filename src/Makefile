@@ -4,7 +4,7 @@ CHECKFL = $(shell pkg-config --cflags --libs check)
 SRC = $(PROJECT_NAME)_parser.c $(PROJECT_NAME)_matrix.c
 OS = $(shell uname)
 ifeq ($(OS), Linux)
-OPEN_CMD = google-chrome
+OPEN_CMD = xdg-open
 else
 OPEN_CMD = open
 endif
@@ -20,7 +20,8 @@ all: $(PROJECT_NAME).a
 
 install:
 	mkdir ../build
-	cd ../build; qmake ../src/SmartCalc.pro && make 
+	cd ../build; qmake ../src/S21_3D_View.pro && make 
+	cp -r objects ../build
 
 uninstall:
 	rm -rf ../build* 
