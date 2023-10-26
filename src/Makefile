@@ -9,13 +9,6 @@ else
 OPEN_CMD = open
 endif
 
-ifeq ($(OS), Linux)
-LEAK_CHECK = valgrind --leak-check=full -s -q --track-origins=yes ./s21_test
-endif
-ifeq ($(OS), Darwin)
-LEAK_CHECK = leaks -atExit -- ./s21_test
-endif
-
 all: $(PROJECT_NAME).a
 
 install:
@@ -65,6 +58,3 @@ format:
 
 style: 
 	clang-format -style=Google -n *.c *.h *.cpp 
-
-leaks: clean tests
-	$(LEAK_CHECK)

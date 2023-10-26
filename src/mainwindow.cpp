@@ -14,26 +14,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
 
-//  this->settingFile = QApplication::applicationDirPath() + "/../../../settings.conf";
-
   if (QSysInfo::productType() == "windows") {
-      // Настройте путь для Windows
-      settingFile = QCoreApplication::applicationDirPath() + "/settings.conf";
-  } else if (QSysInfo::productType() == "osx") {
-      // Настройте путь для MacOS                       // В маках обычно все файлы с конфигурвциями хранятся в одном месте.
-      settingFile = QDir::homePath() + "/Library/Application Support/YourAppName/settings.conf";
+    settingFile = QCoreApplication::applicationDirPath() + "/settings.conf";
+  } else if (QSysInfo::productType() == "macos") {
+    this->settingFile =
+        QApplication::applicationDirPath() + "/../../../settings.conf";
   } else {
-      // По умолчанию, используем путь для Linux
-      settingFile = QCoreApplication::applicationDirPath() + "/settings.conf";
+    // По умолчанию, используем путь для Linux
+    settingFile = QCoreApplication::applicationDirPath() + "/settings.conf";
   }
-  printf("settings file: %s\n", settingFile.toStdString().c_str());
-
-  char rgba_color[40];
-  sprintf(rgba_color, "background-color: rgb(%d,%d,%d)", (int)(ui->openGLWidget->b_red * 255),
-          (int)(ui->openGLWidget->b_green*255), (int)(ui->openGLWidget->b_blue*255));
-  printf("background-color: rgb(%d,%d,%d)", (int)ui->openGLWidget->b_red,
-         (int)ui->openGLWidget->b_green, (int)ui->openGLWidget->b_blue);
-  ui->check_color_back->setStyleSheet(rgba_color);
 
   timer = new QTimer;
   gifImage = new QImage[50]{};
@@ -41,9 +30,48 @@ MainWindow::MainWindow(QWidget *parent)
 
   default_val();
 
-    qDebug() << QSysInfo::productType(); // Выводит в терминал название операционной системы.
-                                         // Посмотрите что у вас и впишите в проверку. У мены выводит "ubuntu".
-                                        // Для винды и линукса пути одинаковые, можно убрать, а можно прописать свой.
+  char rgba_color_b[40];
+  char rgba_color_f[40];
+  char rgba_color_v[40];
+  sprintf(rgba_color_b, "background-color: rgb(%d,%d,%d)",
+          (int)(ui->openGLWidget->b_red * 255),
+          (int)(ui->openGLWidget->b_green * 255),
+          (int)(ui->openGLWidget->b_blue * 255));
+  ui->check_color_back->setStyleSheet(rgba_color_b);
+
+  switch (ui->openGLWidget->face_type) {
+    case SOLID:
+      ui->f_solid->setChecked(true);
+      break;
+    case DASHED:
+      ui->f_dashed->setChecked(true);
+      break;
+    case NONE:
+      ui->f_no->setChecked(true);
+      break;
+  }
+  sprintf(rgba_color_f, "background-color: rgb(%d,%d,%d)",
+          (int)(ui->openGLWidget->f_red * 255),
+          (int)(ui->openGLWidget->f_green * 255),
+          (int)(ui->openGLWidget->f_blue * 255));
+  ui->check_color_face->setStyleSheet(rgba_color_f);
+
+  switch (ui->openGLWidget->vert_type) {
+    case NO:
+      ui->v_no->setChecked(true);
+      break;
+    case CIRCLE:
+      ui->v_circle->setChecked(true);
+      break;
+    case SQUARE:
+      ui->v_square->setChecked(true);
+      break;
+  }
+  sprintf(rgba_color_v, "background-color: rgb(%d,%d,%d)",
+          (int)(ui->openGLWidget->v_red * 255),
+          (int)(ui->openGLWidget->v_green * 255),
+          (int)(ui->openGLWidget->v_blue * 255));
+  ui->check_color_vert->setStyleSheet(rgba_color_v);
 }
 
 MainWindow::~MainWindow() {
@@ -55,7 +83,6 @@ MainWindow::~MainWindow() {
 
 void MainWindow::default_val() {
   if (QFile::exists(settingFile)) {
-      printf("find\n");
     QSettings settings(settingFile, QSettings::IniFormat);
     settings.beginGroup("Translate");
     ui->translate_x->setValue(settings.value("x").value<int>());
@@ -74,42 +101,28 @@ void MainWindow::default_val() {
     settings.endGroup();
 
     settings.beginGroup("LineSet");
-    if (settings.value("solid").toBool()) {
-      ui->f_solid->setChecked(true);
-    } else if (settings.value("dashed").toBool()) {
-      ui->f_dashed->setChecked(true);
-    }
-    ui->check_color_face->setPalette(
-        QPalette(settings.value("LineColor").value<QColor>()));
-    ui->thickness->setValue(settings.value("value").toInt());
+    ui->openGLWidget->face_type = settings.value("face_type").value<int>();
+    ui->openGLWidget->f_red = settings.value("LineColorRed").value<double>();
+    ui->openGLWidget->f_green =
+        settings.value("LineColorGreen").value<double>();
+    ui->openGLWidget->f_blue = settings.value("LineColorBlue").value<double>();
+    ui->thickness->setValue(settings.value("value").value<int>());
     settings.endGroup();
 
     settings.beginGroup("Verticies");
-    if (settings.value("disable").toBool()) {
-      ui->v_no->setChecked(true);
-    } else if (settings.value("circle").toBool()) {
-      ui->v_circle->setChecked(true);
-    } else if (settings.value("square").toBool()) {
-      ui->v_square->setChecked(true);
-    }
-    if (settings.value("color").toString().length() > 0) {
-      ui->check_color_vert->setPalette(
-          QPalette(settings.value("color").value<QColor>()));
-    }
-    ui->hsbWidth->setValue(settings.value("size").toInt());
+    ui->openGLWidget->vert_type = settings.value("vert_type").value<int>();
+    ui->openGLWidget->v_red = settings.value("ColorRed").value<double>();
+    ui->openGLWidget->v_green = settings.value("ColorGreen").value<double>();
+    ui->openGLWidget->v_blue = settings.value("ColorBlue").value<double>();
+    ui->hsbWidth->setValue(settings.value("size").value<int>());
     settings.endGroup();
 
     settings.beginGroup("background");
-    if (settings.value("color").toString().length() > 0) {
-        ui->openGLWidget->b_red = settings.value("b_red").value<double>();
-        ui->openGLWidget->b_green = settings.value("b_green").value<double>();
-        ui->openGLWidget->b_blue = settings.value("b_blue").value<double>();
-        ui->check_color_back->setPalette(
-            QPalette(settings.value("color").value<QColor>()));
-     }
+    ui->openGLWidget->b_red = settings.value("b_red").value<double>();
+    ui->openGLWidget->b_green = settings.value("b_green").value<double>();
+    ui->openGLWidget->b_blue = settings.value("b_blue").value<double>();
     settings.endGroup();
-  } else
-      printf("no find");
+  }
 }
 
 void MainWindow::saveSettings() {
@@ -132,19 +145,18 @@ void MainWindow::saveSettings() {
   settings.endGroup();
 
   settings.beginGroup("LineSet");
-  settings.setValue("solid", ui->f_solid->isChecked());
-  settings.setValue("dashed", ui->f_dashed->isChecked());
-  settings.setValue("LineColor",
-                    ui->check_color_face->palette().color(QPalette::Button));
+  settings.setValue("face_type", ui->openGLWidget->face_type);
+  settings.setValue("LineColorRed", ui->openGLWidget->f_red);
+  settings.setValue("LineColorGreen", ui->openGLWidget->f_green);
+  settings.setValue("LineColorBlue", ui->openGLWidget->f_blue);
   settings.setValue("value", ui->thickness->value());
   settings.endGroup();
 
   settings.beginGroup("Verticies");
-  settings.setValue("disable", ui->v_no->isChecked());
-  settings.setValue("circle", ui->v_circle->isChecked());
-  settings.setValue("square", ui->v_square->isChecked());
-  settings.setValue("color",
-                    ui->check_color_vert->palette().color(QPalette::Button));
+  settings.setValue("vert_type", ui->openGLWidget->vert_type);
+  settings.setValue("ColorRed", ui->openGLWidget->v_red);
+  settings.setValue("ColorGreen", ui->openGLWidget->v_green);
+  settings.setValue("ColorBlue", ui->openGLWidget->v_blue);
   settings.setValue("size", ui->hsbWidth->value());
   settings.endGroup();
 
@@ -153,14 +165,13 @@ void MainWindow::saveSettings() {
   settings.setValue("b_green", ui->openGLWidget->b_green);
   settings.setValue("b_blue", ui->openGLWidget->b_blue);
   settings.endGroup();
-
-  printf("settings file: %s\n", settingFile.toStdString().c_str());
 }
 
 void MainWindow::on_pushButton_clicked() {
   QString str;
-  str = QFileDialog::getOpenFileName(this, "Выбрать файл", QApplication::applicationDirPath() + "/../../../objects",
-                                     "*.obj");
+  str = QFileDialog::getOpenFileName(
+      this, "Выбрать файл",
+      QApplication::applicationDirPath() + "/../../../../src/objects", "*.obj");
   std::string expression = str.toStdString();
   char *file = expression.data();
 
@@ -191,6 +202,7 @@ void MainWindow::set_info(QString filename, int vertex, int face) {
 
 void MainWindow::on_v_circle_clicked() {
   ui->openGLWidget->vert_type = CIRCLE;
+
   ui->openGLWidget->update();
 }
 
@@ -445,8 +457,4 @@ void MainWindow::slotTimer() {
   }
 }
 
-void MainWindow::on_MainWindow_destroyed()
-{
-    saveSettings();
-}
-
+void MainWindow::on_MainWindow_destroyed() { saveSettings(); }

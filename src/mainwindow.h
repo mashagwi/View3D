@@ -129,7 +129,7 @@ class MainWindow : public QMainWindow {
 
   void on_MainWindow_destroyed();
 
-private:
+ private:
   Ui::MainWindow *ui;
 
   QString settingFile;
